@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import { GameState } from "./game";
+import dynamic from "next/dynamic";
 
 type GameContextType = {
   state: GameState;
@@ -33,7 +34,7 @@ export const useGameContext = () => {
   return context;
 };
 
-export const GameProvider = ({ children }: { children: React.ReactNode }) => {
+const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, setState] = useState<GameState>("selectNFT");
   const [selectedNFTs, setSelectedNFTs] = useState<Set<string>>(new Set());
   const [selectedTimeline, setSelectedTimeline] = useState<string | null>(null);
@@ -62,3 +63,5 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     </GameContext.Provider>
   );
 };
+
+export default dynamic(() => Promise.resolve(GameProvider), {ssr: false})

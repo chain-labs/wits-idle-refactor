@@ -6,6 +6,7 @@ import { NFTData, StakedNFT } from "./game";
 import useTimer from "@/hooks/useTimer";
 import SelectingNFTS from "@/components/game/SelectYourNFT";
 import StakingNFTs from "@/components/game/LockingNFTs";
+import dynamic from "next/dynamic";
 
 type GameStatesProps = {
   ownedNfts: NFTData[];
@@ -47,3 +48,5 @@ export const GameStates = ({ ownedNfts, stakedNfts }: GameStatesProps) => {
 
   return <>{stateComponents[state]}</>;
 };
+
+export default dynamic(() => Promise.resolve(GameStates), {ssr: false})

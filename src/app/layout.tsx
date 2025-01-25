@@ -19,7 +19,7 @@ export default function RootLayout({
       <body className={beaufortPro.className}>
         <AbstractProvider>
           <MusicWrapper>
-            {/* <div id="modal" className="fixed z-50"></div> */}
+            <div id="modal" className="fixed z-50"></div>
             {children}
           </MusicWrapper>
         </AbstractProvider>

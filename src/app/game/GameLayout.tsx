@@ -13,6 +13,7 @@ import { useState } from "react";
 import useTimer from "@/hooks/useTimer";
 import useSponsoredGame from "./useSponsoredGame";
 import useMintNft from "./useMintNft";
+import dynamic from "next/dynamic";
 
 type GameLayoutProps = {
   children: React.ReactNode;
@@ -25,7 +26,7 @@ type GameLayoutProps = {
   stakedNfts: StakedNFT[];
 };
 
-export const GameLayout = ({
+const GameLayout = ({
   children,
   loading,
   openModal,
@@ -163,3 +164,5 @@ export const GameLayout = ({
     </div>
   );
 };
+
+export default dynamic(() => Promise.resolve(GameLayout), { ssr: false });

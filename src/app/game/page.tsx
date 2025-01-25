@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { useAccount } from "wagmi";
 import { useNFTManager } from "./useNFTManager";
-import { GameProvider } from "./GameContext";
-import { GameLayout } from "./GameLayout";
+import GameProvider from "./GameContext";
+import GameLayout from "./GameLayout";
 import { GameStates } from "./GameStates";
+import dynamic from "next/dynamic";
 
-export default function GamePage() {
+function GamePage() {
   const [openModal, setOpenModal] = useState<null | React.ReactNode>(null);
   const [openInstructionModal, setOpenInstructionModal] = useState(true);
   const account = useAccount();
@@ -31,3 +32,5 @@ export default function GamePage() {
     </GameProvider>
   );
 }
+
+export default dynamic(() => Promise.resolve(GamePage), { ssr: false });

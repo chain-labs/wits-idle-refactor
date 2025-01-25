@@ -1,17 +1,13 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
-import { IconType } from "react-icons/lib";
 import {
   PiSpeakerSimpleHighDuotone,
   PiSpeakerSimpleSlashDuotone,
 } from "react-icons/pi";
 
-export default function MusicWrapper({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function MusicWrapper({ children }: { children: React.ReactNode }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
@@ -62,13 +58,10 @@ export default function MusicWrapper({
           <PiSpeakerSimpleHighDuotone />
         )}
       </button>
-      <audio
-        ref={audioRef}
-        src="/assets/music/background.mp3"
-        loop
-        preload="auto"
-      />
+      <audio ref={audioRef} src="/music/background.mp3" loop preload="auto" />
       {children}
     </div>
   );
 }
+
+export default dynamic(() => Promise.resolve(MusicWrapper), { ssr: false });

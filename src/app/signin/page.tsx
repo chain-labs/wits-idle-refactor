@@ -9,6 +9,7 @@ import { Suspense, useEffect } from "react";
 import Button from "@/components/ui/Button";
 import { useAccount } from "wagmi";
 import { useLoginWithAbstract } from "@abstract-foundation/agw-react";
+import dynamic from "next/dynamic";
 
 function SignIn() {
   const account = useAccount();
@@ -88,10 +89,12 @@ function AuthContent() {
   );
 }
 
-export default function Auth() {
+function Auth() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <AuthContent />
     </Suspense>
   );
 }
+
+export default dynamic(() => Promise.resolve(Auth), { ssr: false });
