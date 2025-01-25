@@ -1,0 +1,441 @@
+diff --git a/LICENSE b/LICENSE
+old mode 100644
+new mode 100755
+diff --git a/README.md b/README.md
+old mode 100644
+new mode 100755
+diff --git a/ai/index.d.ts b/ai/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/ai/index.js b/ai/index.js
+old mode 100644
+new mode 100755
+diff --git a/ai/index.mjs b/ai/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/ai/package.json b/ai/package.json
+old mode 100644
+new mode 100755
+diff --git a/bi/index.d.ts b/bi/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/bi/index.js b/bi/index.js
+old mode 100644
+new mode 100755
+diff --git a/bi/index.mjs b/bi/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/bi/package.json b/bi/package.json
+old mode 100644
+new mode 100755
+diff --git a/bs/index.d.ts b/bs/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/bs/index.js b/bs/index.js
+old mode 100644
+new mode 100755
+diff --git a/bs/index.mjs b/bs/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/bs/package.json b/bs/package.json
+old mode 100644
+new mode 100755
+diff --git a/cg/index.d.ts b/cg/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/cg/index.js b/cg/index.js
+old mode 100644
+new mode 100755
+diff --git a/cg/index.mjs b/cg/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/cg/package.json b/cg/package.json
+old mode 100644
+new mode 100755
+diff --git a/ci/index.d.ts b/ci/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/ci/index.js b/ci/index.js
+old mode 100644
+new mode 100755
+diff --git a/ci/index.mjs b/ci/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/ci/package.json b/ci/package.json
+old mode 100644
+new mode 100755
+diff --git a/di/index.d.ts b/di/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/di/index.js b/di/index.js
+old mode 100644
+new mode 100755
+diff --git a/di/index.mjs b/di/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/di/package.json b/di/package.json
+old mode 100644
+new mode 100755
+diff --git a/fa/index.d.ts b/fa/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/fa/index.js b/fa/index.js
+old mode 100644
+new mode 100755
+diff --git a/fa/index.mjs b/fa/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/fa/package.json b/fa/package.json
+old mode 100644
+new mode 100755
+diff --git a/fa6/index.d.ts b/fa6/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/fa6/index.js b/fa6/index.js
+old mode 100644
+new mode 100755
+diff --git a/fa6/index.mjs b/fa6/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/fa6/package.json b/fa6/package.json
+old mode 100644
+new mode 100755
+diff --git a/fc/index.d.ts b/fc/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/fc/index.js b/fc/index.js
+old mode 100644
+new mode 100755
+diff --git a/fc/index.mjs b/fc/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/fc/package.json b/fc/package.json
+old mode 100644
+new mode 100755
+diff --git a/fi/index.d.ts b/fi/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/fi/index.js b/fi/index.js
+old mode 100644
+new mode 100755
+diff --git a/fi/index.mjs b/fi/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/fi/package.json b/fi/package.json
+old mode 100644
+new mode 100755
+diff --git a/gi/index.d.ts b/gi/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/gi/index.js b/gi/index.js
+old mode 100644
+new mode 100755
+diff --git a/gi/index.mjs b/gi/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/gi/package.json b/gi/package.json
+old mode 100644
+new mode 100755
+diff --git a/go/index.d.ts b/go/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/go/index.js b/go/index.js
+old mode 100644
+new mode 100755
+diff --git a/go/index.mjs b/go/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/go/package.json b/go/package.json
+old mode 100644
+new mode 100755
+diff --git a/gr/index.d.ts b/gr/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/gr/index.js b/gr/index.js
+old mode 100644
+new mode 100755
+diff --git a/gr/index.mjs b/gr/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/gr/package.json b/gr/package.json
+old mode 100644
+new mode 100755
+diff --git a/hi/index.d.ts b/hi/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/hi/index.js b/hi/index.js
+old mode 100644
+new mode 100755
+diff --git a/hi/index.mjs b/hi/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/hi/package.json b/hi/package.json
+old mode 100644
+new mode 100755
+diff --git a/hi2/index.d.ts b/hi2/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/hi2/index.js b/hi2/index.js
+old mode 100644
+new mode 100755
+diff --git a/hi2/index.mjs b/hi2/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/hi2/package.json b/hi2/package.json
+old mode 100644
+new mode 100755
+diff --git a/im/index.d.ts b/im/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/im/index.js b/im/index.js
+old mode 100644
+new mode 100755
+diff --git a/im/index.mjs b/im/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/im/package.json b/im/package.json
+old mode 100644
+new mode 100755
+diff --git a/index.d.ts b/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/index.js b/index.js
+old mode 100644
+new mode 100755
+diff --git a/index.mjs b/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/io/index.d.ts b/io/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/io/index.js b/io/index.js
+old mode 100644
+new mode 100755
+diff --git a/io/index.mjs b/io/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/io/package.json b/io/package.json
+old mode 100644
+new mode 100755
+diff --git a/io5/index.d.ts b/io5/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/io5/index.js b/io5/index.js
+old mode 100644
+new mode 100755
+diff --git a/io5/index.mjs b/io5/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/io5/package.json b/io5/package.json
+old mode 100644
+new mode 100755
+diff --git a/lia/index.d.ts b/lia/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/lia/index.js b/lia/index.js
+old mode 100644
+new mode 100755
+diff --git a/lia/index.mjs b/lia/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/lia/package.json b/lia/package.json
+old mode 100644
+new mode 100755
+diff --git a/lib/iconBase.d.ts b/lib/iconBase.d.ts
+old mode 100644
+new mode 100755
+index 96b251fc900f86871ff3f7ceaf9442f72eb42c78..9891a022c2be4d36ec8f7f80a0f5380023959e5e
+--- a/lib/iconBase.d.ts
++++ b/lib/iconBase.d.ts
+@@ -13,7 +13,7 @@ export interface IconBaseProps extends React.SVGAttributes<SVGElement> {
+     color?: string;
+     title?: string;
+ }
+-export type IconType = (props: IconBaseProps) => JSX.Element;
++export type IconType = (props: IconBaseProps) => React.ReactNode;
+ export declare function IconBase(props: IconBaseProps & {
+     attr?: Record<string, string>;
+ }): JSX.Element;
+diff --git a/lib/iconBase.js b/lib/iconBase.js
+old mode 100644
+new mode 100755
+diff --git a/lib/iconBase.mjs b/lib/iconBase.mjs
+old mode 100644
+new mode 100755
+diff --git a/lib/iconContext.d.ts b/lib/iconContext.d.ts
+old mode 100644
+new mode 100755
+diff --git a/lib/iconContext.js b/lib/iconContext.js
+old mode 100644
+new mode 100755
+diff --git a/lib/iconContext.mjs b/lib/iconContext.mjs
+old mode 100644
+new mode 100755
+diff --git a/lib/iconsManifest.d.ts b/lib/iconsManifest.d.ts
+old mode 100644
+new mode 100755
+diff --git a/lib/iconsManifest.js b/lib/iconsManifest.js
+old mode 100644
+new mode 100755
+diff --git a/lib/iconsManifest.mjs b/lib/iconsManifest.mjs
+old mode 100644
+new mode 100755
+diff --git a/lib/index.d.ts b/lib/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/lib/index.js b/lib/index.js
+old mode 100644
+new mode 100755
+diff --git a/lib/index.mjs b/lib/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/lib/package.json b/lib/package.json
+old mode 100644
+new mode 100755
+diff --git a/lu/index.d.ts b/lu/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/lu/index.js b/lu/index.js
+old mode 100644
+new mode 100755
+diff --git a/lu/index.mjs b/lu/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/lu/package.json b/lu/package.json
+old mode 100644
+new mode 100755
+diff --git a/md/index.d.ts b/md/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/md/index.js b/md/index.js
+old mode 100644
+new mode 100755
+diff --git a/md/index.mjs b/md/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/md/package.json b/md/package.json
+old mode 100644
+new mode 100755
+diff --git a/package.json b/package.json
+old mode 100644
+new mode 100755
+diff --git a/pi/index.d.ts b/pi/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/pi/index.js b/pi/index.js
+old mode 100644
+new mode 100755
+diff --git a/pi/index.mjs b/pi/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/pi/package.json b/pi/package.json
+old mode 100644
+new mode 100755
+diff --git a/ri/index.d.ts b/ri/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/ri/index.js b/ri/index.js
+old mode 100644
+new mode 100755
+diff --git a/ri/index.mjs b/ri/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/ri/package.json b/ri/package.json
+old mode 100644
+new mode 100755
+diff --git a/rx/index.d.ts b/rx/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/rx/index.js b/rx/index.js
+old mode 100644
+new mode 100755
+diff --git a/rx/index.mjs b/rx/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/rx/package.json b/rx/package.json
+old mode 100644
+new mode 100755
+diff --git a/si/index.d.ts b/si/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/si/index.js b/si/index.js
+old mode 100644
+new mode 100755
+diff --git a/si/index.mjs b/si/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/si/package.json b/si/package.json
+old mode 100644
+new mode 100755
+diff --git a/sl/index.d.ts b/sl/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/sl/index.js b/sl/index.js
+old mode 100644
+new mode 100755
+diff --git a/sl/index.mjs b/sl/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/sl/package.json b/sl/package.json
+old mode 100644
+new mode 100755
+diff --git a/tb/index.d.ts b/tb/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/tb/index.js b/tb/index.js
+old mode 100644
+new mode 100755
+diff --git a/tb/index.mjs b/tb/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/tb/package.json b/tb/package.json
+old mode 100644
+new mode 100755
+diff --git a/tfi/index.d.ts b/tfi/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/tfi/index.js b/tfi/index.js
+old mode 100644
+new mode 100755
+diff --git a/tfi/index.mjs b/tfi/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/tfi/package.json b/tfi/package.json
+old mode 100644
+new mode 100755
+diff --git a/ti/index.d.ts b/ti/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/ti/index.js b/ti/index.js
+old mode 100644
+new mode 100755
+diff --git a/ti/index.mjs b/ti/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/ti/package.json b/ti/package.json
+old mode 100644
+new mode 100755
+diff --git a/vsc/index.d.ts b/vsc/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/vsc/index.js b/vsc/index.js
+old mode 100644
+new mode 100755
+diff --git a/vsc/index.mjs b/vsc/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/vsc/package.json b/vsc/package.json
+old mode 100644
+new mode 100755
+diff --git a/wi/index.d.ts b/wi/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/wi/index.js b/wi/index.js
+old mode 100644
+new mode 100755
+diff --git a/wi/index.mjs b/wi/index.mjs
+old mode 100644
+new mode 100755
+diff --git a/wi/package.json b/wi/package.json
+old mode 100644
+new mode 100755

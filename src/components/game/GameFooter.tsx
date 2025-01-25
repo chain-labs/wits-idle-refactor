@@ -46,7 +46,6 @@ export default function GameFooter(
           onClick={props.backButton.function}
           className="bg-gradient-to-b from-[#FFFED0] to-[#EFC779] text-black aspect-square flex justify-center items-center w-[48px] h-[48px] rounded-[4px] group"
         >
-          {/* @ts-expect-error */}
           <FaChevronLeft className="group-hover:scale-[1.5] transition-all duration-300" />
         </button>
       ) : (
@@ -71,7 +70,6 @@ export default function GameFooter(
           onClick={props.exitButton.function}
           className="bg-gradient-to-b from-[#FFFED0] to-[#EFC779] text-black aspect-square flex justify-center items-center w-[48px] h-[48px] rounded-[4px] text-[24px] group"
         >
-          {/* @ts-expect-error */}
           <IoClose className="group-hover:rotate-180 transition-all duration-300" />
         </button>
       ) : (

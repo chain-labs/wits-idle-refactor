@@ -69,7 +69,6 @@ export default function ShareAdventure({
           )}
           onClick={closeModal}
         >
-          {/* @ts-expect-error */}
           <IoClose />
         </button>
       </div>

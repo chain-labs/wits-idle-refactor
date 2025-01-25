@@ -29,6 +29,9 @@
       },
     },
   },
+  "patchedDependencies": {
+    "react-icons@5.4.0": "patches/react-icons@5.4.0.patch",
+  },
   "packages": {
     "@abstract-foundation/agw-client": ["@abstract-foundation/agw-client@1.1.1", "", { "peerDependencies": { "abitype": "^1.0.0", "typescript": ">=5.0.4", "viem": "^2.21.26" }, "optionalPeers": ["typescript"] }, "sha512-1+mLO8wg93znTLUe1nKdH9laQs2JL43YRfKRjfEm+Jtx1HABknnG4MMMnh5sin/Jbzqb0O5xALCLl9LveVhTdg=="],
 

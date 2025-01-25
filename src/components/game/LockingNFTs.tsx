@@ -19,7 +19,7 @@ function SingleNFTIcon({ id, icon }: { id: string; icon: string | undefined }) {
         )}
       >
         <div className="flex justify-center items-center w-[100px] h-[100px]">
-          {/* @ts-expect-error */}
+          
           <FaPlus />
         </div>
       </Link>
