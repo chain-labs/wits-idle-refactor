@@ -10,7 +10,7 @@ export const GET_USER_NFTS = gql`
           }
         }
         address
-        stakes {
+        stakes(orderDirection: "desc", orderBy: "endTime"){
           items {
             endTime
             nft {

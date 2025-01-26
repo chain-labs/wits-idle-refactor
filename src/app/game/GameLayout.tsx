@@ -9,7 +9,6 @@ import Modal from "@/components/global/Modal";
 import GameFooter, { GameFooterProps } from "@/components/game/GameFooter";
 import { GameState, NFTData, StakedNFT } from "./game";
 import ExitGame from "@/components/game/ExitGame";
-import { useState } from "react";
 import useTimer from "@/hooks/useTimer";
 import useSponsoredGame from "./useSponsoredGame";
 import useMintNft from "./useMintNft";
@@ -61,6 +60,7 @@ const GameLayout = ({
         function: () => {
           setState("sendingNFTsToAdventure");
         },
+        loading: buttonLoading,
       },
       exitButton: {
         visible: true,

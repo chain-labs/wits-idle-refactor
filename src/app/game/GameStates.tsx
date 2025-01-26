@@ -24,8 +24,6 @@ export const GameStates = ({ ownedNfts, stakedNfts }: GameStatesProps) => {
   } = useGameContext();
   const progressTimer = useTimer(timeInSecs);
 
-  console.log("GameStates", state, selectedNFTs, selectedTimeline, timeInSecs);
-
   const stateComponents = {
     selectNFT: (
       <SelectingNFTS

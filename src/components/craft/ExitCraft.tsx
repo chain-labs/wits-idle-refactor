@@ -3,7 +3,7 @@
 import { cn } from "@/utils";
 import Link from "next/link";
 
-export default function ExitGame({
+export default function ExitCraft({
   closeModal,
   openModal,
 }: {
@@ -28,7 +28,7 @@ export default function ExitGame({
           ARE YOU SURE
         </h1>
         <p className="text-[12px] text-black uppercase font-regular">
-          Do you really want to exit this game?
+          Do you really want to exit this crafting?
         </p>
 
         <div className="flex justify-center items-center gap-[8px] mt-[16px]">
