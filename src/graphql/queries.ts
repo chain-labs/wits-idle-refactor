@@ -10,7 +10,7 @@ export const GET_USER_NFTS = gql`
           }
         }
         address
-        stakes(orderDirection: "desc", orderBy: "endTime"){
+        stakes(orderDirection: "desc", orderBy: "endTime") {
           items {
             endTime
             nft {
@@ -19,6 +19,39 @@ export const GET_USER_NFTS = gql`
             contractStakeId
             unstakeTxId
           }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_ADVENTURE_DATA = gql`
+  query Query(
+    $where: userFilter
+    $limit: Int
+    $orderDirection: String
+    $orderBy: String
+    $after: String
+  ) {
+    users(where: $where) {
+      items {
+        stakes(
+          limit: $limit
+          orderDirection: $orderDirection
+          orderBy: $orderBy
+          after: $after
+        ) {
+          items {
+            startTime
+            duration {
+              duration
+            }
+            unstakeTxId
+          }
+          pageInfo {
+            endCursor
+          }
+          totalCount
         }
       }
     }

@@ -24,8 +24,6 @@ export default function Header({
   const account = useAccount();
   const { logout } = useLoginWithAbstract();
 
-  console.log("account", account);
-
   useEffect(() => {
     setLeft(`${activeRefLeftValue()}%`);
   }, [active, homeRef, adventuresRef, materialsRef, prizesRef, accountRef]);
