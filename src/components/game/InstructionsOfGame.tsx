@@ -40,7 +40,7 @@ export default function InstructionsOfGame({
         className={cn(
           "absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[-20%]",
           "flex flex-col justify-center items-center gap-[10px]",
-          "w-[90%] md:w-[55%] xl:max-w-[50%] 2xl:max-w-[40%]",
+          "w-[90%] md:w-[55%] xl:max-w-[50%] 2xl:max-w-[40%] max-w-[2800px]",
           "text-[14px] text-lightGold text-center uppercase",
         )}
       >
