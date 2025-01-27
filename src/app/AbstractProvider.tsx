@@ -2,6 +2,7 @@
 
 import { AbstractWalletProvider } from "@abstract-foundation/agw-react";
 import dynamic from "next/dynamic";
+import { http } from "viem";
 import { abstractTestnet } from "viem/chains";
 
 const config = {
@@ -13,7 +14,12 @@ const config = {
 
 const AbstractProvider = ({ children }: { children: React.ReactNode }) => {
   return (
-    <AbstractWalletProvider config={config}>{children}</AbstractWalletProvider>
+    <AbstractWalletProvider
+      chain={abstractTestnet}
+      transport={http("https://api.testnet.abs.xyz")}
+    >
+      {children}
+    </AbstractWalletProvider>
   );
 };
 

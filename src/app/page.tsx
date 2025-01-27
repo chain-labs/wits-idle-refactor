@@ -21,7 +21,7 @@ function Home() {
       <Header active="home" />
 
       <div className="absolute bottom-0 left-0 h-[40vh] w-full rounded-[100%]  bg-[radial-gradient(#FDD88840,#FDD88800,#FDD88800)]"></div>
-      {!account ? (
+      {!account.address ? (
         <Link
           href="/login"
           className="absolute bottom-[10vh] left-1/2 -translate-x-1/2 -translate-y-full z-0"
@@ -29,12 +29,13 @@ function Home() {
           <Button>SIGNIN</Button>
         </Link>
       ) : (
-        <Link
+        <a
           href="/game"
+          target="_self"
           className="absolute bottom-[10vh] left-1/2 -translate-x-1/2 -translate-y-full z-0"
         >
           <Button>START GAME</Button>
-        </Link>
+        </a>
       )}
     </div>
   );

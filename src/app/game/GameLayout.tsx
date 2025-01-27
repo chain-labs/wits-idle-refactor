@@ -11,14 +11,12 @@ import { GameState, NFTData, StakedNFT } from "./game";
 import ExitGame from "@/components/game/ExitGame";
 import useTimer from "@/hooks/useTimer";
 import useSponsoredGame from "./useSponsoredGame";
-import useMintNft from "./useMintNft";
 import dynamic from "next/dynamic";
+import { useEffect } from "react";
 
 type GameLayoutProps = {
   children: React.ReactNode;
   loading: boolean;
-  openModal: React.ReactNode | null;
-  setOpenModal: (modal: React.ReactNode | null) => void;
   openInstructionModal: boolean;
   setOpenInstructionModal: (open: boolean) => void;
   ownedNfts: NFTData[];
@@ -28,8 +26,6 @@ type GameLayoutProps = {
 const GameLayout = ({
   children,
   loading,
-  openModal,
-  setOpenModal,
   openInstructionModal,
   setOpenInstructionModal,
   ownedNfts,
@@ -42,6 +38,8 @@ const GameLayout = ({
     selectedTimeline,
     timeInSecs,
     setButtonLoading,
+    openModal,
+    setOpenModal,
     buttonLoading,
     setTimeInSecs,
   } = useGameContext();
@@ -119,12 +117,12 @@ const GameLayout = ({
     },
   };
 
-  useMintNft(openInstructionModal && ownedNfts.length === 0 && !loading);
-
-  if (stakedNfts.length && state !== "adventureInProgress") {
-    setTimeInSecs(Number(stakedNfts[0].endTime));
-    setState("adventureInProgress");
-  }
+  useEffect(() => {
+    if (stakedNfts.length && state !== "adventureInProgress") {
+      setTimeInSecs(Number(stakedNfts[0].endTime));
+      setState("adventureInProgress");
+    }
+  }, [stakedNfts, state]);
 
   if (openInstructionModal) {
     return (

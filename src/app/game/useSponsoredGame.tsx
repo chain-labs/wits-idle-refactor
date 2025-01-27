@@ -8,7 +8,7 @@ import { getGeneralPaymasterInput } from "viem/zksync";
 import { useGameContext } from "./GameContext";
 import { LOCKING_NFT_TIME_PERIODS } from "./constants";
 import useStaking from "@/abi/Staking";
-import { useAccount } from "wagmi";
+import { useAccount, useConnectors } from "wagmi";
 import ShareAdventure from "@/components/game/ShareAdventure";
 import { useNFTManager } from "./useNFTManager";
 import { IMAGEKIT_IMAGES } from "@/images";
@@ -21,10 +21,11 @@ export default function useSponsoredGame() {
     setOpenModal,
     setTimeInSecs,
     setState,
-    setButtonLoading
+    setButtonLoading,
   } = useGameContext();
   const nftContract = useNFTs();
   const paymaster = usePayMaster();
+  const connector = useConnectors();
   const staking = useStaking();
   const account = useAccount();
   const { setStakedNfts, stakedNfts } = useNFTManager(
@@ -52,9 +53,13 @@ export default function useSponsoredGame() {
       (row) => `select-time-${row.time}` === selectedTimeline,
     );
 
+    console.log({ connector });
+
+    await connector[0].connect();
+
     if (!selectedTimelineDetails) return;
     try {
-      await writeContractSponsoredAsync({
+      const tx = await writeContractSponsoredAsync({
         abi: staking.abi as [],
         address: staking.address as `0x${string}`,
         functionName: "batchStakeNFTs",
@@ -69,24 +74,27 @@ export default function useSponsoredGame() {
           innerInput: "0x",
         }),
       });
-      setTimeInSecs(selectedTimelineDetails.secs);
-      setOpenModal(
-        <ShareAdventure
-          closeModal={() => {
-            setOpenModal(null);
-            changeTheStateToAdventureInProgress();
-          }}
-        />,
-      );
+
+      if (tx) {
+        setTimeInSecs(selectedTimelineDetails.secs);
+        setOpenModal(
+          <ShareAdventure
+            closeModal={() => {
+              setOpenModal(null);
+              changeTheStateToAdventureInProgress();
+            }}
+          />,
+        );
+      }
     } catch (e) {
       console.log(e);
     } finally {
-        setButtonLoading(false);
+      setButtonLoading(false);
     }
   }
 
   function changeTheStateToAdventureInProgress() {
-    console.log('changeTheStateToAdventureInProgress');
+    console.log("changeTheStateToAdventureInProgress");
     const selectedTimelineDetails = LOCKING_NFT_TIME_PERIODS.find(
       (row) => `select-time-${row.time}` === selectedTimeline,
     );
@@ -105,6 +113,19 @@ export default function useSponsoredGame() {
 
   async function unstakeNfts() {
     const stakeIds = stakedNfts.map((nft) => nft.stakeId);
+
+    console.log({
+      abi: staking.abi as [],
+      address: staking.address as `0x${string}`,
+      functionName: "batchUnstakeNFTs",
+      account: account.address as `0x${string}`,
+      args: [stakeIds],
+      paymaster: paymaster.address as `0x${string}`,
+      paymasterInput: getGeneralPaymasterInput({
+        innerInput: "0x",
+      }),
+    });
+
     try {
       await writeContractSponsoredAsync({
         abi: staking.abi as [],
@@ -117,6 +138,8 @@ export default function useSponsoredGame() {
           innerInput: "0x",
         }),
       });
+
+      window.location.href = "/craft";
       // router.push("/craft");
     } catch (e) {
       console.log(e);

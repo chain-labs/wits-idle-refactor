@@ -4,6 +4,7 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { GameState } from "./game";
@@ -42,6 +43,12 @@ const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [openModal, setOpenModal] = useState<React.ReactNode | null>(null);
   const [buttonLoading, setButtonLoading] = useState(false);
 
+  useEffect(() => {
+    if (openModal) {
+      console.log({ openModal });
+    }
+  }, [openModal]);
+
   return (
     <GameContext.Provider
       value={{
@@ -64,4 +71,4 @@ const GameProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default dynamic(() => Promise.resolve(GameProvider), {ssr: false})
+export default dynamic(() => Promise.resolve(GameProvider), { ssr: false });

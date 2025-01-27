@@ -9,7 +9,6 @@ import { GameStates } from "./GameStates";
 import dynamic from "next/dynamic";
 
 function GamePage() {
-  const [openModal, setOpenModal] = useState<null | React.ReactNode>(null);
   const [openInstructionModal, setOpenInstructionModal] = useState(true);
   const account = useAccount();
   const { ownedNfts, stakedNfts, loading } = useNFTManager(
@@ -20,8 +19,6 @@ function GamePage() {
     <GameProvider>
       <GameLayout
         loading={loading}
-        openModal={openModal}
-        setOpenModal={setOpenModal}
         openInstructionModal={openInstructionModal}
         setOpenInstructionModal={setOpenInstructionModal}
         ownedNfts={ownedNfts}

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { cn } from "@/utils";
 import { Dispatch, SetStateAction } from "react";
 import GradientSideBorder from "../border/GradientSideBorder";
+import useMintNft from "@/app/game/useMintNft";
 
 function SingleNFTIcon({
   id,
@@ -62,6 +63,9 @@ export default function SelectingNFTS({
       return newSet;
     });
   }
+
+  useMintNft(ownedNfts.length === 0);
+
   return (
     <div className="relative bg-[#020708BF] flex flex-col justify-center items-center gap-[24px] mx-[10vw] mt-[50px] px-[10vw] max-h-[65vh]">
       <GradientSideBorder />
