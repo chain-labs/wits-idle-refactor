@@ -32,6 +32,7 @@ export const GET_ADVENTURE_DATA = gql`
     $orderDirection: String
     $orderBy: String
     $after: String
+    $stakesWhere2: stakeFilter
   ) {
     users(where: $where) {
       items {
@@ -40,6 +41,7 @@ export const GET_ADVENTURE_DATA = gql`
           orderDirection: $orderDirection
           orderBy: $orderBy
           after: $after
+          where: $stakesWhere2
         ) {
           items {
             startTime

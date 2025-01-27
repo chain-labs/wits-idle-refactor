@@ -1,7 +1,6 @@
 "use client";
 
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +10,21 @@ import ModalRevealAnimation from "@/components/animations/ModalRevealAnimation";
 import Header from "@/components/global/Header";
 import { IMAGEKIT_BG } from "@/images";
 import PrizeCollectConfirmation from "@/components/prize/PrizeCollectConfirmation";
+import { useUserDataContext } from "../UserDataContext";
+import { useRestPost } from "@/hooks/api/useRestClient";
+
+interface ShippingDetails {
+  address: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  country: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  optional: string;
+  rewardId: string;
+}
 
 const ContactInformationSchema = z.object({
   emailOrTwitter: z.string().email().optional(),
@@ -29,27 +43,60 @@ export default function Home() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<{
-    emailOrTwitter: string;
-    country: string;
-    firstName: string;
-    lastName: string;
-    address: string;
-    optionalAddress: string;
-    city: string;
-    province: string;
-    postalcode: string;
-  }>({
+  } = useForm<z.infer<typeof ContactInformationSchema>>({
     resolver: zodResolver(ContactInformationSchema),
   });
 
+  const { rewards: userRewards } = useUserDataContext();
+
+  console.log("userRewards", userRewards);
+
   const [openModal, setOpenModal] = useState<null | React.ReactNode>(null);
 
-  function handleShippingFormSubmit() {
-    setOpenModal(
-      <PrizeCollectConfirmation closeModal={() => setOpenModal(null)} />,
-    );
+  const postReq = useRestPost<ShippingDetails>(["/shipping"], "/shiping");
+
+  function handleShippingFormSubmit(rewardId: string) {
+    handleSubmit((data) => {
+      postReq
+        .mutateAsync({
+          address: data.address,
+          email: data.emailOrTwitter || "",
+          firstName: data.firstName,
+          lastName: data.lastName,
+          country: data.country,
+          city: data.city,
+          province: data.province,
+          postalCode: data.postalcode,
+          optional: data.optionalAddress || "",
+          rewardId: rewardId,
+        })
+        .then(() => {
+          setOpenModal(
+            <PrizeCollectConfirmation closeModal={() => setOpenModal(null)} />,
+          );
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    })();
   }
+
+  const [localUserData, setLocalUserData] = useState<{
+    username: string;
+    email: string;
+  }>({
+    username: "",
+    email: "",
+  });
+
+  useEffect(() => {
+    (async () => {
+      const userData = localStorage.getItem("userData");
+      if (userData) {
+        setLocalUserData(JSON.parse(userData));
+      }
+    })();
+  }, []);
 
   return (
     <div className="relative min-h-screen w-full bg-cover bg-center overflow-x-hidden bg-blend-multiply bg-opacity-10 z-0">
@@ -57,6 +104,7 @@ export default function Home() {
       <div
         style={{
           backgroundImage: `url(${IMAGEKIT_BG.PRIZE})`,
+          backgroundSize: "contain",
         }}
         className="absolute inset-0 w-full h-full bg-cover opacity-10"
       ></div>
@@ -129,13 +177,14 @@ export default function Home() {
           </defs>
         </svg>
       </div>
-      <div className="flex justify-start items-start gap-[50px] my-[50px] z-10 max-w-[1200px] mx-auto">
+      <div className="flex justify-start items-start flex-wrap md:flex-nowrap gap-[50px] my-[50px] z-10 max-w-[1200px] mx-auto">
         <form className="flex flex-col justify-start items-start gap-[24px] rounded-[8px] border-[1px] border-[#292929] bg-[#14141480] px-[54px] py-[64px] uppercase text-lightGold z-10 w-full">
           <h2 className="bg-[#141414] px-[16px] py-[8px] rounded-[4px] w-[calc(100%+16px)] -translate-x-[16px]">
             Contact Information
           </h2>
           <Input
             placeholder="Email or Twitter"
+            defaultValue={localUserData.email}
             {...register("emailOrTwitter")}
           />
           <h2 className="bg-[#141414] px-[16px] py-[8px] rounded-[4px] w-[calc(100%+16px)] -translate-x-[16px] mt-[64px]">
@@ -158,28 +207,42 @@ export default function Home() {
           <Input placeholder="Postal Code" {...register("postalcode")} />
         </form>
 
-        <div className="flex flex-col justify-start items-start gap-[24px] rounded-[8px] border-[1px] border-[#292929] bg-[#14141480] px-[48px] py-[64px] uppercase text-lightGold z-10 w-full max-w-[500px]">
-          <div className="flex justify-start items-start gap-[24px]">
-            <div className="relative bg-black rounded-[4px] w-[152px] h-[135px]">
-              <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 rounded-full bg-[#292929] text-white w-[35px] h-[35px] flex justify-center items-center">
-                1
+        <div className="flex flex-col gap-2">
+          {userRewards.map((reward) => (
+            <div
+              key={reward.rewardId}
+              className="flex flex-col justify-start items-start gap-[24px] rounded-[8px] border-[1px] border-[#292929] bg-[#14141480] px-[48px] py-[64px] uppercase text-lightGold z-10 w-full max-w-[500px]"
+            >
+              <div className="flex justify-start items-start gap-[24px]">
+                <div
+                  style={{
+                    backgroundImage: `url(${reward.rewardImageUrl})`,
+                  }}
+                  className="relative rounded-[4px] w-[152px] h-[135px]"
+                >
+                  <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 rounded-full bg-[#292929] text-white w-[35px] h-[35px] flex justify-center items-center">
+                    1
+                  </div>
+                </div>
+                <div className="flex flex-col gap-[8px]">
+                  <p className="uppercase">{reward.rewardName}</p>
+                  <p className="capitalize">
+                    {new Date(reward.dateTimeInSecs).toLocaleDateString()}
+                  </p>
+                  <p className="capitalize">{reward.rewardId}</p>
+                  <p className="capitalize">{reward.rewardRarity}</p>
+                </div>
               </div>
+              <hr className="h-[1px] w-full border-[#292929]" />
+              <button
+                type="button"
+                onClick={() => handleShippingFormSubmit(reward.rewardId)}
+                className="bg-black py-[16px] w-full h-fit border border-lightGold text-lightGold rounded-[4px] uppercase"
+              >
+                SUBMIT
+              </button>
             </div>
-            <div className="flex flex-col gap-[8px]">
-              <p className="uppercase">PRIZE NAME</p>
-              <p className="capitalize">Date Time</p>
-              <p className="capitalize">Prize ID</p>
-              <p className="capitalize">Rarity</p>
-            </div>
-          </div>
-          <hr className="h-[1px] w-full border-[#292929]" />
-          <button
-            type="button"
-            onClick={handleShippingFormSubmit}
-            className="bg-black py-[16px] w-full h-fit border border-lightGold text-lightGold rounded-[4px] uppercase"
-          >
-            SUBMIT
-          </button>
+          ))}
         </div>
       </div>
       {openModal !== null && (

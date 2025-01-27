@@ -32,12 +32,12 @@ export default function ExitCraft({
         </p>
 
         <div className="flex justify-center items-center gap-[8px] mt-[16px]">
-          <Link
+          <a
             href="/"
             className="bg-black text-lightGold uppercase px-[48px] py-[8px]"
           >
             YES
-          </Link>
+          </a>
           <button
             onClick={closeModal}
             className="bg-black text-lightGold uppercase px-[48px] py-[8px]"

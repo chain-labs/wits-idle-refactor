@@ -45,13 +45,13 @@ export default function ShareAdventure({
           <p className="font-lato max-w-[500px] text-center">
             “I just sent my @wits_tcg catenians on an adventure to earn rewards!
             Check it out at{" "}
-            <Link
+            <a
               href="https://wits.academy/"
               target="_blank"
               className="underline"
             >
               https://wits.academy/
-            </Link>
+            </a>
             ”
           </p>
         </div>

@@ -75,7 +75,7 @@ const CraftLayout = ({
         text: "COLLECT",
         visible: true,
         function: () => {
-          //   router.push("/prizes");
+          location.href = "/prizes";
         },
         loading: buttonLoading,
       },

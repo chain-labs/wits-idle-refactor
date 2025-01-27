@@ -26,7 +26,7 @@ interface Reward {
   rewardId: string;
   rewardImageUrl: string;
   rewardName: string;
-  dateTime: number;
+  dateTimeInSecs: number;
   rewardRarity: string;
 }
 
@@ -114,16 +114,30 @@ const server = Bun.serve({
       }
 
       if (req.method === "GET" && url.pathname.startsWith("/userMaterials")) {
-        const materials: Materials = {
+        const used: Materials = {
           common: 10,
           uncommon: 5,
           rare: 3,
           legendary: 1,
           mythic: 0,
         };
+        const unused: Materials = {
+          common: 4,
+          uncommon: 3,
+          rare: 2,
+          legendary: 1,
+          mythic: 1,
+        };
+        const progress: Materials = {
+          common: 5,
+          uncommon: 2,
+          rare: 1,
+          legendary: 0,
+          mythic: 0,
+        };
 
         return Response.json(
-          { status: "success", materials },
+          { status: "success", materials: { used, unused, progress } },
           { headers: corsHeaders },
         );
       }
@@ -148,9 +162,9 @@ const server = Bun.serve({
         const mockRewards: Reward[] = [
           {
             rewardId: "1",
-            rewardImageUrl: "https://example.com/reward.png",
+            rewardImageUrl: "https://www.apple.com/newsroom/images/product/iphone/geo/apple_iphone-12_new-design_geo_10132020_big.jpg.large.jpg",
             rewardName: "NFT IP Pack",
-            dateTime: Date.now(),
+            dateTimeInSecs: Date.now(),
             rewardRarity: "rare",
           },
         ];
@@ -158,11 +172,9 @@ const server = Bun.serve({
         return Response.json(
           {
             status: "success",
-            data: [
-              {
-                rewardsList: mockRewards,
-              },
-            ],
+            data: {
+              rewardsList: mockRewards,
+            },
           },
           { headers: corsHeaders },
         );

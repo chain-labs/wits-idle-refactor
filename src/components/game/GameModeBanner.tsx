@@ -51,12 +51,12 @@ export default function GameModeBanner() {
         </defs>
       </svg>
 
-      <Link
+      <a
         href="/"
         className="absolute top-0 left-1/2 -translate-x-1/2 h-full flex justify-center items-center"
       >
         <GlowingH1 className="text-[18px] xl:text-[36px]">Game Mode</GlowingH1>
-      </Link>
+      </a>
 
       <div className="absolute bottom-0 left-1/2 -translate-y-1/2 w-[40px] scale-50 md:scale-[0.9] xl:scale-100 h-[fitpx]">
         <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">

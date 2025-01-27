@@ -1,84 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
-import { cn } from "@/utils";
+import React, { useEffect } from "react";
 import Image from "next/image";
-import { TiMinus, TiPlus } from "react-icons/ti";
 import { IMAGEKIT_BG, IMAGEKIT_IMAGES } from "@/images";
 import Header from "@/components/global/Header";
-
-function DesignedCell({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      className={cn(
-        "border-lightGold border-[1px] rounded-[4px]",
-        "bg-gradient-to-b from-[#FFFED0] to-[#8C8C73]",
-        "text-black text-center",
-        "w-full",
-        "flex justify-center items-center",
-        "px-[32px] py-[4px]",
-      )}
-    >
-      {children}
-    </div>
-  );
-}
-
-function CraftItem(craft: { icon: string; rarity: string }) {
-  const [count, setCount] = useState(0);
-
-  return (
-    <div className="flex flex-col justify-center items-center gap-[8px] p-[8px] text-lightGold">
-      <Image
-        src={craft.icon}
-        width={150}
-        height={150}
-        alt="Common"
-        className="w-[150px] h-[150px]"
-      />
-      <div className="text-[#797979] bg-black rounded-[4px] w-full py-[8px] text-center">
-        {craft.rarity}
-      </div>
-      <div className="flex justify-center items-center gap-[16px]">
-        <button
-          onClick={() => {
-            if (count > 0) setCount(count - 1);
-          }}
-          className={cn(
-            "border-lightGold border-[1px] rounded-[4px]",
-            "bg-gradient-to-b from-[#FFFED0] to-[#8C8C73]",
-            "text-black text-center",
-            "w-fit",
-            "flex justify-center items-center",
-            "p-[8px]",
-          )}
-        >
-          <TiMinus />
-        </button>
-        <div className="bg-black rounded-[4px] border-lightGold border-[1px] text-center px-[32px] py-[8px]">
-          {String(count).padStart(2, "0")}
-        </div>
-        <button
-          onClick={() => {
-            setCount(count + 1);
-          }}
-          className={cn(
-            "border-lightGold border-[1px] rounded-[4px]",
-            "bg-gradient-to-b from-[#FFFED0] to-[#8C8C73]",
-            "text-black text-center",
-            "w-fit",
-            "flex justify-center items-center",
-            "p-[8px]",
-          )}
-        >
-          <TiPlus />
-        </button>
-      </div>
-    </div>
-  );
-}
+import { useAccount } from "wagmi";
 
 export default function Home() {
+  const account = useAccount();
+  const [localUserData, setLocalUserData] = React.useState<{
+    username: string;
+    email: string;
+  }>({
+    username: "",
+    email: "",
+  });
+
+  useEffect(() => {
+    (async () => {
+      const userData = localStorage.getItem("userData");
+      if (userData) {
+        setLocalUserData(JSON.parse(userData));
+      }
+    })();
+  }, []);
+
   return (
     <div className="relative min-h-screen w-full bg-cover bg-center overflow-x-hidden bg-blend-multiply bg-opacity-10 z-0">
       <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-black via-[#0000] to-black z-[-1]"></div>
@@ -179,23 +125,23 @@ export default function Home() {
           </div>
           <div className="flex flex-col gap-[8px] w-full">
             <small className="uppercase text-[#797979] text-[10px]">
-              USER ID
+              ADDRESS
             </small>
-            <p className="uppercase text-lightGold">EXAMPLE</p>
+            <p className="uppercase text-lightGold">{account.address}</p>
             <hr className="border-[#797979] w-full" />
           </div>
           <div className="flex flex-col gap-[8px] w-full">
             <small className="uppercase text-[#797979] text-[10px]">
               USERNAME
             </small>
-            <p className="uppercase text-lightGold">EXAMPLE</p>
+            <p className="uppercase text-lightGold">{localUserData.username}</p>
             <hr className="border-[#797979] w-full" />
           </div>
           <div className="flex flex-col gap-[8px] w-full">
             <small className="uppercase text-[#797979] text-[10px]">
               EMAIL
             </small>
-            <p className="uppercase text-lightGold">example@gmail.com</p>
+            <p className="uppercase text-lightGold">{localUserData.email}</p>
             <hr className="border-[#797979] w-full" />
           </div>
         </div>

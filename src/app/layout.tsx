@@ -3,6 +3,7 @@ import "./globals.css";
 import { beaufortPro } from "../fonts";
 import AbstractProvider from "./AbstractProvider";
 import MusicWrapper from "./MusicWrapper";
+import UserDataContext from "./UserDataContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,10 +19,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={beaufortPro.className}>
         <AbstractProvider>
-          <MusicWrapper>
-            <div id="modal" className="fixed z-50"></div>
-            {children}
-          </MusicWrapper>
+          <UserDataContext>
+            <MusicWrapper>
+              <div id="modal" className="fixed z-50"></div>
+              {children}
+            </MusicWrapper>
+          </UserDataContext>
         </AbstractProvider>
       </body>
     </html>

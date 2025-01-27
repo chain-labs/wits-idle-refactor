@@ -8,6 +8,9 @@ import Link from "next/link";
 import AnimateNumber from "@/components/animations/AnimateNumber";
 import { IMAGEKIT_BG, IMAGEKIT_ICONS } from "@/images";
 import Header from "@/components/global/Header";
+import { useUserDataContext } from "../UserDataContext";
+
+type Rarity = "COMMON" | "UNCOMMON" | "RARE" | "MYTHICAL" | "LEGENDARY";
 
 function DesignedCell({ children }: { children: React.ReactNode }) {
   return (
@@ -26,9 +29,17 @@ function DesignedCell({ children }: { children: React.ReactNode }) {
   );
 }
 
-function CraftItem(craft: { icon: string; rarity: string }) {
-  const [count, setCount] = useState(0);
-
+function CraftItem({
+  craft,
+  count,
+  setCount,
+  maxCount,
+}: {
+  craft: { icon: string; rarity: string };
+  count: number;
+  setCount: (count: number) => void;
+  maxCount: number;
+}) {
   return (
     <div className="flex flex-col justify-center items-center gap-[8px] p-[8px] text-lightGold">
       <Image
@@ -53,7 +64,9 @@ function CraftItem(craft: { icon: string; rarity: string }) {
             "w-fit",
             "flex justify-center items-center",
             "p-[8px]",
+            "disabled:opacity-50 disabled:cursor-not-allowed",
           )}
+          disabled={count === 0}
         >
           <TiMinus />
         </button>
@@ -74,7 +87,9 @@ function CraftItem(craft: { icon: string; rarity: string }) {
             "w-fit",
             "flex justify-center items-center",
             "p-[8px]",
+            "disabled:opacity-50 disabled:cursor-not-allowed",
           )}
+          disabled={count >= maxCount}
         >
           <TiPlus />
         </button>
@@ -84,41 +99,67 @@ function CraftItem(craft: { icon: string; rarity: string }) {
 }
 
 export default function Home() {
+  const { materials: userMaterials } = useUserDataContext();
+  console.log("userMaterials", userMaterials);
+
+  const [data, setData] = useState<Record<Rarity, number>>({
+    COMMON: 0,
+    UNCOMMON: 0,
+    RARE: 0,
+    MYTHICAL: 0,
+    LEGENDARY: 0,
+  });
+
+  const probability = {
+    COMMON: 0,
+    UNCOMMON: 0,
+    RARE:
+      (data.UNCOMMON ? 5 : 0) +
+      (data.RARE ? 10 : 0) +
+      (data.LEGENDARY ? 10 : 0) +
+      (data.MYTHICAL ? 10 : 0),
+    LEGENDARY:
+      (data.RARE ? 10 : 0) +
+      (data.LEGENDARY ? 30 : 0) +
+      (data.MYTHICAL ? 30 : 0),
+    MYTHICAL: (data.LEGENDARY ? 30 : 0) + (data.MYTHICAL ? 50 : 0),
+  };
+
   const rarityList = [
     {
       icon: IMAGEKIT_ICONS.COMMON,
       rarity: "COMMON",
-      unused: 0,
-      used: 0,
-      chances: 0,
+      unused: userMaterials.unused.common,
+      used: userMaterials.used.common,
+      chances: probability.COMMON,
     },
     {
       icon: IMAGEKIT_ICONS.UNCOMMON,
       rarity: "UNCOMMON",
-      unused: 0,
-      used: 0,
-      chances: 0,
+      unused: userMaterials.unused.uncommon,
+      used: userMaterials.used.uncommon,
+      chances: probability.UNCOMMON,
     },
     {
       icon: IMAGEKIT_ICONS.RARE,
       rarity: "RARE",
-      unused: 0,
-      used: 0,
-      chances: 0,
+      unused: userMaterials.unused.rare,
+      used: userMaterials.used.rare,
+      chances: probability.RARE,
     },
     {
       icon: IMAGEKIT_ICONS.MYTHICAL,
       rarity: "MYTHICAL",
-      unused: 0,
-      used: 0,
-      chances: 0,
+      unused: userMaterials.unused.mythic,
+      used: userMaterials.used.mythic,
+      chances: probability.MYTHICAL,
     },
     {
       icon: IMAGEKIT_ICONS.LEGENDARY,
       rarity: "LEGENDARY",
-      unused: 0,
-      used: 0,
-      chances: 0,
+      unused: userMaterials.unused.legendary,
+      used: userMaterials.used.legendary,
+      chances: probability.LEGENDARY,
     },
   ];
 
@@ -205,7 +246,7 @@ export default function Home() {
 
       <div className="flex justify-start items-start gap-[50px] mx-[32px] my-[50px] z-10">
         <div className="flex flex-col justify-start items-start gap-[24px] rounded-[8px] border-[1px] border-[#292929] bg-[#14141480] px-[48px] py-[64px] uppercase text-lightGold z-10 w-full">
-          <div className="flex justify-center items-center gap-[150px] w-full">
+          <div className="flex justify-center items-center gap-[150px] w-full flex-wrap">
             <div className="flex flex-col justify-center items-center gap-[25px]">
               <h1>MATERIALS TABLE</h1>
               <table>
@@ -246,19 +287,21 @@ export default function Home() {
                   </tr>
                 </thead>
                 <tbody className="flex flex-col gap-[16px]">
-                  {rarityList.map((rarity, index) => (
-                    <tr
-                      key={rarity.rarity}
-                      className="grid grid-cols-[3fr_1fr] gap-[16px]"
-                    >
-                      <td className="underline text-black">
-                        <DesignedCell>{rarity.rarity}</DesignedCell>
-                      </td>
-                      <td>
-                        <DesignedCell>{rarity.chances}%</DesignedCell>
-                      </td>
-                    </tr>
-                  ))}
+                  {Object.entries(probability).map(
+                    ([rarity, chances], index) => (
+                      <tr
+                        key={rarity}
+                        className="grid grid-cols-[3fr_1fr] gap-[16px]"
+                      >
+                        <td className="underline text-black">
+                          <DesignedCell>{rarity}</DesignedCell>
+                        </td>
+                        <td>
+                          <DesignedCell>{chances}%</DesignedCell>
+                        </td>
+                      </tr>
+                    ),
+                  )}
                 </tbody>
               </table>
             </div>
@@ -268,15 +311,23 @@ export default function Home() {
             different chances at Loot! This could be Free Packs of cards in
             game, real packs, booster boxes, merch and more!
           </p>
-          <div className="flex flex-wrap justify-between items-center w-full max-w-[1500px] mx-auto">
+          <div className="flex flex-wrap justify-center items-center w-full max-w-[1500px] mx-auto md:gap-[50px]">
             {rarityList.map((rarity, index) => (
-              <CraftItem {...rarity} key={index} />
+              <CraftItem
+                craft={rarity}
+                count={data[rarity.rarity as Rarity]}
+                setCount={(count) =>
+                  setData({ ...data, [rarity.rarity]: count })
+                }
+                key={index}
+                maxCount={rarity.unused}
+              />
             ))}
           </div>
         </div>
       </div>
 
-      <Link
+      <a
         href="/craft"
         className="flex justify-center items-center gap-[50px] z-10"
       >
@@ -286,7 +337,7 @@ export default function Home() {
         >
           Craft
         </button>
-      </Link>
+      </a>
     </div>
   );
 }

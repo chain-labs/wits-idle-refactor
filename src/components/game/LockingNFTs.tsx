@@ -12,17 +12,16 @@ import { LOCKING_NFT_TIME_PERIODS } from "@/app/game/constants";
 function SingleNFTIcon({ id, icon }: { id: string; icon: string | undefined }) {
   if (!icon) {
     return (
-      <Link
+      <a
         href="/game"
         className={cn(
           "relative p-[9px] rounded-[8px] bg-black border-[1px] border-[#62647233] text-[#333333]",
         )}
       >
         <div className="flex justify-center items-center w-[100px] h-[100px]">
-          
           <FaPlus />
         </div>
-      </Link>
+      </a>
     );
   }
   return (

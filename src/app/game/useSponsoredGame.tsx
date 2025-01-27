@@ -122,7 +122,7 @@ export default function useSponsoredGame() {
           <ShareAdventure
             closeModal={() => {
               setOpenModal(null);
-              changeTheStateToAdventureInProgress();
+              changeTheStateToAdventureInProgress(selectedTimelineDetails.secs);
             }}
           />,
         );
@@ -134,7 +134,6 @@ export default function useSponsoredGame() {
         <ShareAdventure
           closeModal={() => {
             setOpenModal(null);
-            changeTheStateToAdventureInProgress();
           }}
         />,
       );
@@ -144,17 +143,11 @@ export default function useSponsoredGame() {
     }
   }
 
-  function changeTheStateToAdventureInProgress() {
-    console.log("changeTheStateToAdventureInProgress");
-    const selectedTimelineDetails = LOCKING_NFT_TIME_PERIODS.find(
-      (row) => `select-time-${row.time}` === selectedTimeline,
-    );
+  function changeTheStateToAdventureInProgress(secs: number) {
     setStakedNfts([
       {
         icon: IMAGEKIT_IMAGES.NFT_ICON,
-        endTime: String(
-          new Date().getTime() / 1000 + (selectedTimelineDetails?.secs ?? 0),
-        ),
+        endTime: String(new Date().getTime() / 1000 + (secs ?? 0)),
         tokenId: Array.from(selectedNFTs)[0],
         stakeId: BigInt(Array.from(selectedNFTs)[0]),
       },
