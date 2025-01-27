@@ -23,7 +23,7 @@ function Home() {
       <div className="absolute bottom-0 left-0 h-[40vh] w-full rounded-[100%]  bg-[radial-gradient(#FDD88840,#FDD88800,#FDD88800)]"></div>
       {!account.address ? (
         <Link
-          href="/login"
+          href="/signin"
           className="absolute bottom-[10vh] left-1/2 -translate-x-1/2 -translate-y-full z-0"
         >
           <Button>SIGNIN</Button>
