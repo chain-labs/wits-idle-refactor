@@ -7,6 +7,7 @@ export const GET_USER_NFTS = gql`
         ownedNfts {
           items {
             nftTokenId
+            nftContractAddress
           }
         }
         address
@@ -18,6 +19,9 @@ export const GET_USER_NFTS = gql`
             }
             contractStakeId
             unstakeTxId
+            nftContract {
+              contract
+            }
           }
         }
       }

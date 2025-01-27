@@ -1,7 +1,9 @@
 export interface NFTUserDataGQL {
   users: {
     items: {
-      ownedNfts: { items: { nftTokenId: string }[] };
+      ownedNfts: {
+        items: { nftTokenId: string; nftContractAddress: `0x${string}` }[];
+      };
       address: string;
       stakes: {
         items: {
@@ -9,6 +11,9 @@ export interface NFTUserDataGQL {
           nft: { tokenId: string };
           contractStakeId: string;
           unstakeTxId: string;
+          nftContract: {
+            contract: string;
+          };
         }[];
       };
     }[];
