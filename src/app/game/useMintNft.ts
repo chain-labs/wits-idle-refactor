@@ -8,21 +8,17 @@ import { gql } from "graphql-request";
 import { useCallback, useEffect } from "react";
 import { getGeneralPaymasterInput } from "viem/zksync";
 import { useAccount } from "wagmi";
+import { useGameContext } from "./GameContext";
 
-const useMintNft = (enabled: boolean) => {
+const useMintNft = () => {
   const nftContract = useNFTs();
   const paymaster = usePayMaster();
   const account = useAccount();
-  const { writeContractSponsoredAsync: mintNFTWrite, error } =
+  const { setButtonLoading } = useGameContext();
+  const { writeContractSponsoredAsync: mintNFTWrite } =
     useWriteContractSponsored();
 
-  useEffect(() => {
-    if (error) {
-      console.error("NFT minting error:", error);
-    }
-  }, [error]);
-
-  const { data: nft, isFetched } = useGQLFetch<{
+  const { data: nft } = useGQLFetch<{
     nftOwnerships: {
       items: {
         id: string;
@@ -45,34 +41,30 @@ const useMintNft = (enabled: boolean) => {
   );
 
   const mintNFT = useCallback(
-    (tokenId: number) => {
-      mintNFTWrite({
-        abi: nftContract.abi as any,
-        address: nftContract.address as `0x${string}`,
-        functionName: "mint",
-        args: [BigInt(tokenId)],
-        paymaster: paymaster.address as `0x${string}`,
-        paymasterInput: getGeneralPaymasterInput({
-          innerInput: "0x",
-        }),
-      });
+    async (refechNfts: () => void) => {
+      const id = Number(nft?.nftOwnerships.items[3].nftTokenId) + 1;
+      try {
+        await mintNFTWrite({
+          abi: nftContract.abi as any,
+          address: nftContract.address as `0x${string}`,
+          functionName: "mint",
+          args: [BigInt(id)],
+          paymaster: paymaster.address as `0x${string}`,
+          paymasterInput: getGeneralPaymasterInput({
+            innerInput: "0x",
+          }),
+        });
+      } catch (e) {
+        console.error("Minting NFT error:", e);
+      } finally {
+        refechNfts();
+        setButtonLoading(false);
+      }
     },
-    [mintNFTWrite, nftContract, paymaster],
+    [mintNFTWrite, nftContract, paymaster, nft],
   );
 
-  useEffect(() => {
-    console.log({ enabled });
-    if (enabled)
-      if (isFetched && account.address) {
-        if (
-          window.confirm(
-            "DEMO: We are minting a mock NFT to your account. Please approve the next transaction to continue the demo.",
-          )
-        ) {
-          mintNFT(Number(nft?.nftOwnerships.items[3].nftTokenId) + 1);
-        }
-      }
-  }, [isFetched, nft, account.address, mintNFT, enabled]);
+  return { mintNFT };
 };
 
 export default useMintNft;

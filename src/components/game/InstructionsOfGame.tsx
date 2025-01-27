@@ -17,61 +17,7 @@ export default function InstructionsOfGame({
 }: {
   closeModal: () => void;
 }) {
-  const nftContract = useNFTs();
   const account = useAccount();
-  const staking = useStaking();
-  const paymaster = usePayMaster();
-  const { data: getIsApprovedForAllData } = useReadContract({
-    abi: nftContract.abi as [],
-    address: nftContract.address as `0x${string}`,
-    functionName: "isApprovedForAll",
-    account: account.address as `0x${string}`,
-    args: [account.address as `0x${string}`, staking.address as `0x${string}`],
-  });
-
-  const {
-    writeContractSponsored: ApprovingNFTSWrite,
-    data: ApprovingNFTSData,
-    isSuccess: ApprovingNFTSIsSuccess,
-  } = useWriteContractSponsored();
-
-  useEffect(() => {
-    if (
-      !nftContract.address ||
-      !staking.address ||
-      !paymaster.address ||
-      !account ||
-      getIsApprovedForAllData ||
-      getIsApprovedForAllData === undefined
-    )
-      return;
-
-    ApprovingNFTSWrite({
-      abi: nftContract.abi as [],
-      account: account.address as `0x${string}`,
-      address: nftContract.address as `0x${string}`,
-      functionName: "setApprovalForAll",
-      args: [staking.address as `0x${string}`, true],
-      paymaster: paymaster.address as `0x${string}`,
-      paymasterInput: getGeneralPaymasterInput({
-        innerInput: "0x",
-      }),
-    });
-  }, [
-    nftContract.address,
-    staking.address,
-    paymaster.address,
-    account,
-    getIsApprovedForAllData,
-    ApprovingNFTSWrite,
-    nftContract.abi,
-  ]);
-
-  useEffect(() => {
-    if (ApprovingNFTSIsSuccess) {
-      console.log("ApprovingNFTS", ApprovingNFTSData);
-    }
-  }, [ApprovingNFTSIsSuccess, ApprovingNFTSData]);
 
   return (
     <div

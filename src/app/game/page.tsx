@@ -11,7 +11,7 @@ import dynamic from "next/dynamic";
 function GamePage() {
   const [openInstructionModal, setOpenInstructionModal] = useState(true);
   const account = useAccount();
-  const { ownedNfts, stakedNfts, loading } = useNFTManager(
+  const { ownedNfts, stakedNfts, loading, refetch } = useNFTManager(
     account.address as `0x${string}`,
   );
 
@@ -23,8 +23,13 @@ function GamePage() {
         setOpenInstructionModal={setOpenInstructionModal}
         ownedNfts={ownedNfts}
         stakedNfts={stakedNfts}
+        refetchNfts={refetch}
       >
-        <GameStates ownedNfts={ownedNfts} stakedNfts={stakedNfts} />
+        <GameStates
+          ownedNfts={ownedNfts}
+          stakedNfts={stakedNfts}
+          refetchNfts={refetch}
+        />
       </GameLayout>
     </GameProvider>
   );

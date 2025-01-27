@@ -21,6 +21,7 @@ type GameLayoutProps = {
   setOpenInstructionModal: (open: boolean) => void;
   ownedNfts: NFTData[];
   stakedNfts: StakedNFT[];
+  refetchNfts: () => void;
 };
 
 const GameLayout = ({
@@ -30,6 +31,7 @@ const GameLayout = ({
   setOpenInstructionModal,
   ownedNfts,
   stakedNfts,
+  refetchNfts,
 }: GameLayoutProps) => {
   const {
     state,
@@ -44,7 +46,8 @@ const GameLayout = ({
     setTimeInSecs,
   } = useGameContext();
   const progressTimer = useTimer(timeInSecs);
-  const { stakingNFTs, unstakeNfts } = useSponsoredGame();
+  const { stakingNFTs, unstakeNfts, isApproved, approveNFT } =
+    useSponsoredGame();
 
   const footerProps: Record<GameState, GameFooterProps> = {
     selectNFT: {
@@ -75,16 +78,27 @@ const GameLayout = ({
           setState("selectNFT");
         },
       },
-      primaryButton: {
-        text: "SEND",
-        visible: true,
-        disabled: selectedTimeline === null,
-        function: () => {
-          setButtonLoading(true);
-          stakingNFTs();
-        },
-        loading: buttonLoading,
-      },
+      primaryButton: isApproved
+        ? {
+            text: "SEND",
+            visible: true,
+            disabled: selectedTimeline === null,
+            function: () => {
+              setButtonLoading(true);
+              stakingNFTs();
+            },
+            loading: buttonLoading,
+          }
+        : {
+            text: "Approve",
+            visible: true,
+            // disabled: selectedNFTs.size === 0,
+            function: () => {
+              setButtonLoading(true);
+              approveNFT();
+            },
+            loading: buttonLoading,
+          },
       exitButton: {
         visible: true,
         function: () => {

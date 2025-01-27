@@ -19,7 +19,7 @@ function SignIn() {
   useEffect(() => {
     if (account.address !== undefined) {
       console.log("account", account);
-      router.push("/");
+      location.href = "/";
       console.log("redirecting to home page");
     }
   }, [account]);

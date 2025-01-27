@@ -5,6 +5,9 @@ import { cn } from "@/utils";
 import { Dispatch, SetStateAction } from "react";
 import GradientSideBorder from "../border/GradientSideBorder";
 import useMintNft from "@/app/game/useMintNft";
+import Button from "../ui/Button";
+import useSponsoredGame from "@/app/game/useSponsoredGame";
+import { useGameContext } from "@/app/game/GameContext";
 
 function SingleNFTIcon({
   id,
@@ -42,6 +45,7 @@ function SingleNFTIcon({
 export default function SelectingNFTS({
   selectedNFTs,
   setSelectedNFTs,
+  refetchNfts,
   ownedNfts,
 }: {
   selectedNFTs: Set<string>;
@@ -50,6 +54,7 @@ export default function SelectingNFTS({
     icon: string;
     tokenId: string;
   }[];
+  refetchNfts: () => void;
 }) {
   function handleNFTSelect(e: React.FormEvent<HTMLFormElement>) {
     const target = e.target as HTMLInputElement;
@@ -64,7 +69,9 @@ export default function SelectingNFTS({
     });
   }
 
-  useMintNft(ownedNfts.length === 0);
+  const { mintNFT } = useMintNft();
+
+  const { setButtonLoading, buttonLoading } = useGameContext();
 
   return (
     <div className="relative bg-[#020708BF] flex flex-col justify-center items-center gap-[24px] mx-[10vw] mt-[50px] px-[10vw] max-h-[65vh]">
@@ -80,19 +87,38 @@ export default function SelectingNFTS({
         </p>
       </div>
       <div className="h-[50vh] overflow-y-auto">
-        <form
-          onChange={handleNFTSelect}
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 mb-[20px] p-4 overflow-auto z-10"
-        >
-          {ownedNfts.map((nft, idx) => (
-            <SingleNFTIcon
-              key={nft.tokenId}
-              id={nft.tokenId}
-              icon={nft.icon}
-              active={selectedNFTs.has(BigInt(nft.tokenId).toString())}
-            />
-          ))}
-        </form>
+        {ownedNfts.length ? (
+          <form
+            onChange={handleNFTSelect}
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 mb-[20px] p-4 overflow-auto z-10"
+          >
+            {ownedNfts.map((nft, idx) => (
+              <SingleNFTIcon
+                key={nft.tokenId}
+                id={nft.tokenId}
+                icon={nft.icon}
+                active={selectedNFTs.has(BigInt(nft.tokenId).toString())}
+              />
+            ))}
+          </form>
+        ) : (
+          <div className="mt-[200px] flex justify-center items-center flex-col">
+            <p className="text-lightGold">
+              You don't have any NFTs to send on an adventure.
+            </p>
+            <Button
+              isLoading={buttonLoading}
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault();
+                setButtonLoading(true);
+                mintNFT(refetchNfts);
+              }}
+              className="mt-[20px]"
+            >
+              Mint NFT
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
