@@ -69,8 +69,9 @@ export default function Header({
       className="relative bg-[linear-gradient(to_right,#FFFED000,#FFFED00D_90%)] flex flex-col justify-between items-center mt-[48px] rounded-[6px] z-50 backdrop-blur-sm max-w-[1200px] mx-auto"
     >
       <div className="flex justify-between items-center w-full py-[8px] px-[48px]">
-        <Link
+        <a
           href={"/"}
+          target="_self"
           className="flex justify-center items-center gap-[8px] uppercase text-lightGold"
         >
           <Image
@@ -82,23 +83,25 @@ export default function Header({
             priority
           />
           <span ref={homeRef}>Crafting</span>
-        </Link>
+        </a>
 
         <div className="flex justify-center items-center gap-[32px] uppercase text-lightGold z-50">
-          <Link ref={adventuresRef} href={"/adventures"}>
+          <a target="_self" ref={adventuresRef} href={"/adventures"}>
             ADVENTURES
-          </Link>
-          <Link ref={materialsRef} href={"/materials"}>
+          </a>
+          <a target="_self" ref={materialsRef} href={"/materials"}>
             MATERIALS
-          </Link>
-          <Link ref={prizesRef} href={"/prizes"}>
+          </a>
+          <a target="_self" ref={prizesRef} href={"/prizes"}>
             PRIZES
-          </Link>
-          <Link ref={accountRef} href={"/account"}>
+          </a>
+          <a target="_self" ref={accountRef} href={"/account"}>
             ACCOUNT
-          </Link>
+          </a>
           {!account.address ? (
-            <Link href="/signin">SIGNIN</Link>
+            <a target="_self" href="/signin">
+              SIGNIN
+            </a>
           ) : (
             <button onClick={logout}>LOGOUT</button>
           )}

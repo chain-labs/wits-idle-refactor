@@ -11,15 +11,28 @@ export const useNFTManager = (account: `0x${string}` | undefined) => {
   const [ownedNfts, setOwnedNfts] = useState<NFTData[]>([]);
   const [stakedNfts, setStakedNfts] = useState<StakedNFT[]>([]);
   const [loading, setLoading] = useState(true);
+  const [trigger, setTrigger] = useState(true);
 
-  const { data: userData } = useGQLFetch<NFTUserDataGQL>(
+  const {
+    data: userData,
+    refetch: refetchData,
+    isFetching,
+    isFetched,
+    isRefetching,
+  } = useGQLFetch<NFTUserDataGQL>(
     ["userData"],
     GET_USER_NFTS,
     {
       address: account?.toLowerCase() ?? "",
     },
-    { enabled: !!account },
+    { enabled: !!account && trigger },
   );
+
+  const refetch = () => {
+    refetchData();
+    console.log("refetching");
+    setTrigger(true);
+  };
 
   useEffect(() => {
     if (userData) {
@@ -48,13 +61,15 @@ export const useNFTManager = (account: `0x${string}` | undefined) => {
       setOwnedNfts(owned);
       setStakedNfts(stakes);
       setLoading(false);
+      setTrigger(false);
     }
-  }, [userData]);
+  }, [userData, isFetched]);
 
   return {
     ownedNfts,
     stakedNfts,
     loading,
     setStakedNfts,
+    refetch,
   };
 };

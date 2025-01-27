@@ -11,9 +11,14 @@ import dynamic from "next/dynamic";
 type GameStatesProps = {
   ownedNfts: NFTData[];
   stakedNfts: StakedNFT[];
+  refetchNfts: () => void;
 };
 
-export const GameStates = ({ ownedNfts, stakedNfts }: GameStatesProps) => {
+export const GameStates = ({
+  ownedNfts,
+  stakedNfts,
+  refetchNfts,
+}: GameStatesProps) => {
   const {
     state,
     selectedNFTs,
@@ -30,6 +35,7 @@ export const GameStates = ({ ownedNfts, stakedNfts }: GameStatesProps) => {
         selectedNFTs={selectedNFTs}
         setSelectedNFTs={setSelectedNFTs}
         ownedNfts={ownedNfts}
+        refetchNfts={refetchNfts}
       />
     ),
     sendingNFTsToAdventure: (
@@ -47,4 +53,4 @@ export const GameStates = ({ ownedNfts, stakedNfts }: GameStatesProps) => {
   return <>{stateComponents[state]}</>;
 };
 
-export default dynamic(() => Promise.resolve(GameStates), {ssr: false})
+export default dynamic(() => Promise.resolve(GameStates), { ssr: false });
