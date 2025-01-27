@@ -30,7 +30,7 @@ export default function useTimer(timeInSecs?: number) {
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  }, [timeInSecs]);
 
   return {
     days: Math.floor(time / 86400),

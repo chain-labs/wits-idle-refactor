@@ -327,17 +327,21 @@ export default function Home() {
         </div>
       </div>
 
-      <a
-        href="/craft"
-        className="flex justify-center items-center gap-[50px] z-10"
+      <div
+        className={cn(
+          "flex justify-center items-center gap-[50px] z-10",
+          Object.values(data).reduce((a, b) => a + b, 0) === 0 &&
+            "pointer-events-none opacity-50",
+        )}
       >
         <button
           type="button"
           className="bg-black mb-[50px] py-[16px] px-[32px] w-[min(40vw,500px)] h-fit border border-lightGold text-lightGold rounded-[4px] uppercase z-10"
+          disabled={Object.values(data).reduce((a, b) => a + b, 0) === 0}
         >
           Craft
         </button>
-      </a>
+      </div>
     </div>
   );
 }
