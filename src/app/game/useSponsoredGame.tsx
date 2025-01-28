@@ -77,6 +77,7 @@ export default function useSponsoredGame({
       setIsApproved(true);
     } catch (e) {
       console.log(e);
+      throw e;
     } finally {
       setButtonLoading(false);
     }
@@ -143,6 +144,7 @@ export default function useSponsoredGame({
       }
     } catch (e) {
       console.log(e);
+      throw e;
     } finally {
       setButtonLoading(false);
       refetch();

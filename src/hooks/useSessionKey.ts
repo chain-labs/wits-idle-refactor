@@ -12,7 +12,7 @@ import {
   useAbstractClient,
   useCreateSession,
 } from "@abstract-foundation/agw-react";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { parseEther, toFunctionSelector } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { abstractTestnet } from "viem/chains";
@@ -32,19 +32,27 @@ const useSessionKeyState = (): SessionKeyState => {
   const paymaster = usePayMaster();
   const { data: agwClient, status } = useAbstractClient();
 
-  const currentSession = useMemo(() => {
-    if (status !== "success" || !agwClient) return null;
+  const [currentSession, setCurrentSession] = useState<SessionClient | null>(
+    null,
+  );
+
+  useEffect(() => {
+    if (status !== "success" || !agwClient) return;
 
     const sessionKeyStore = localStorage.getItem("agw_sessionKeyStore");
-    if (!sessionKeyStore) return null;
+    if (!sessionKeyStore) return;
 
     const { session, privateKey } = JSON.parse(sessionKeyStore);
     const sessionSigner = privateKeyToAccount(privateKey);
-    return agwClient.toSessionClient(sessionSigner, session);
+    const sessionClient = agwClient.toSessionClient(sessionSigner, session);
+    setCurrentSession(sessionClient);
   }, [agwClient, status]);
 
   const sessionReady = useMemo(() => {
-    return !!currentSession?.account;
+    const sessionData = localStorage.getItem("agw_sessionKeyStore");
+    if (sessionData) return true;
+    if (currentSession?.account) return true;
+    return false;
   }, [currentSession]);
 
   async function createNewSession() {
@@ -136,6 +144,7 @@ const useSessionKeyState = (): SessionKeyState => {
     };
 
     const sessionClient = agwClient.toSessionClient(sessionSigner, session);
+    setCurrentSession(sessionClient);
 
     localStorage.setItem(
       "agw_sessionKeyStore",

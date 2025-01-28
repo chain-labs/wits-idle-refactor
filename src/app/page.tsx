@@ -44,7 +44,7 @@ function GetUserData({
       className="bg-black/90 w-full h-full  flex flex-col justify-center items-center z-10"
     >
       <div className="w-fit flex flex-col justify-center items-center gap-6">
-        <h1 className="text-white text-2xl">Provide use your details</h1>
+        <h1 className="text-white text-2xl">Provide us your details</h1>
         <input
           type="text"
           name="username"
@@ -77,12 +77,12 @@ function Home() {
     (() => {
       if (typeof window !== "undefined") {
         const localData = localStorage.getItem("userData");
-        if (!localData) {
-          setOpenModal(<GetUserData setOpenModal={setOpenModal} />);
+        if (account.address && !localData) {
+          // setOpenModal(<GetUserData setOpenModal={setOpenModal} />);
         }
       }
     })();
-  }, []);
+  }, [account.address]);
 
   return (
     <>
@@ -96,29 +96,29 @@ function Home() {
 
         <Header active="home" />
 
-      <div className="absolute bottom-0 left-0 h-[40vh] w-full rounded-[100%]  bg-[radial-gradient(#FDD88840,#FDD88800,#FDD88800)]"></div>
-      {!account.address ? (
-        <a
-          href="/signin"
-          className="absolute bottom-[10vh] left-1/2 -translate-x-1/2 -translate-y-full z-0"
-        >
-          <Button>SIGNIN</Button>
-        </a>
-      ) : (
-        <a
-          href="/game"
-          target="_self"
-          className="absolute bottom-[10vh] left-1/2 -translate-x-1/2 -translate-y-full z-0"
-        >
-          <Button>START GAME</Button>
-        </a>
+        <div className="absolute bottom-0 left-0 h-[40vh] w-full rounded-[100%]  bg-[radial-gradient(#FDD88840,#FDD88800,#FDD88800)]"></div>
+        {!account.address ? (
+          <a
+            href="/signin"
+            className="absolute bottom-[10vh] left-1/2 -translate-x-1/2 -translate-y-full z-0"
+          >
+            <Button>SIGNIN</Button>
+          </a>
+        ) : (
+          <a
+            href="/game"
+            target="_self"
+            className="absolute bottom-[10vh] left-1/2 -translate-x-1/2 -translate-y-full z-0"
+          >
+            <Button>START GAME</Button>
+          </a>
+        )}
+      </div>
+      {openModal && (
+        <Modal>
+          <ModalRevealAnimation>{openModal}</ModalRevealAnimation>
+        </Modal>
       )}
-    </div>
-    {openModal && (
-      <Modal>
-        <ModalRevealAnimation>{openModal}</ModalRevealAnimation>
-      </Modal>
-    )}
     </>
   );
 }

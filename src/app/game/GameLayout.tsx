@@ -93,27 +93,28 @@ const GameLayout = ({
           setState("selectNFT");
         },
       },
-      primaryButton: isApproved
-        ? {
-            text: "SEND",
-            visible: true,
-            disabled: selectedTimeline === null,
-            function: () => {
-              setButtonLoading(true);
-              stakingNFTs();
-            },
-            loading: buttonLoading,
+      primaryButton: {
+        text: "SEND",
+        visible: true,
+        disabled: selectedTimeline === null,
+        function: async () => {
+          console.log({ isApproved });
+          setButtonLoading(true);
+          try {
+            if (!isApproved) {
+              console.log("approving...");
+
+              await approveNFT();
+            }
+            console.log("staking...");
+
+            await stakingNFTs();
+          } catch (e) {
+            console.error("Error staking NFTs", e);
           }
-        : {
-            text: "Approve",
-            visible: true,
-            // disabled: selectedNFTs.size === 0,
-            function: () => {
-              setButtonLoading(true);
-              approveNFT();
-            },
-            loading: buttonLoading,
-          },
+        },
+        loading: buttonLoading,
+      },
       exitButton: {
         visible: true,
         function: () => {

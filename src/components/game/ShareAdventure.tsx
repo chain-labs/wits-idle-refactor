@@ -55,8 +55,14 @@ export default function ShareAdventure({
             ”
           </p>
         </div>
-
-        <Button>SHARE</Button>
+        <a
+          href={
+            "https://twitter.com/intent/post?text=I%20just%20sent%20my%20%40wits_tcg%20catenians%20on%20an%20adventure%20to%20earn%20rewards!%0ACheck%20it%20out%20at%20https%3A%2F%2Fwits.academy%2F"
+          }
+          target="_blank"
+        >
+          <Button>SHARE</Button>
+        </a>
 
         <button
           className={cn(
