@@ -8,6 +8,7 @@ import useMintNft from "@/app/game/useMintNft";
 import Button from "../ui/Button";
 import useSponsoredGame from "@/app/game/useSponsoredGame";
 import { useGameContext } from "@/app/game/GameContext";
+import { SessionClient } from "@abstract-foundation/agw-client/sessions";
 
 function SingleNFTIcon({
   id,
@@ -47,6 +48,7 @@ export default function SelectingNFTS({
   setSelectedNFTs,
   refetchNfts,
   ownedNfts,
+  sessionClient,
 }: {
   selectedNFTs: Set<string>;
   setSelectedNFTs: Dispatch<SetStateAction<Set<string>>>;
@@ -55,6 +57,7 @@ export default function SelectingNFTS({
     tokenId: string;
   }[];
   refetchNfts: () => void;
+  sessionClient: SessionClient | null;
 }) {
   function handleNFTSelect(e: React.FormEvent<HTMLFormElement>) {
     const target = e.target as HTMLInputElement;

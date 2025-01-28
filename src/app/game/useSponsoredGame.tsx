@@ -12,11 +12,17 @@ import { useAccount, useConnectors, useReadContract } from "wagmi";
 import ShareAdventure from "@/components/game/ShareAdventure";
 import { useNFTManager } from "./useNFTManager";
 import { IMAGEKIT_IMAGES } from "@/images";
+import useSessionKey from "@/hooks/useSessionKey";
+import { SessionClient } from "@abstract-foundation/agw-client/sessions";
+import { abstractTestnet } from "viem/chains";
 
-export default function useSponsoredGame() {
+export default function useSponsoredGame({
+  sessionClient,
+}: {
+  sessionClient: SessionClient | null;
+}) {
   const [isApproved, setIsApproved] = useState(false);
 
-  const { writeContractSponsoredAsync } = useWriteContractSponsored();
   const {
     selectedNFTs,
     selectedTimeline,
@@ -54,10 +60,13 @@ export default function useSponsoredGame() {
   }, [isApprovedForAllData, approvalFetched]);
 
   const approveNFT = useCallback(async () => {
+    if (!sessionClient?.account) return;
     try {
-      await writeContractSponsoredAsync({
+      await sessionClient?.writeContract({
         abi: nftContract.abi as any,
         address: nftContract.address as `0x${string}`,
+        account: sessionClient.account,
+        chain: abstractTestnet, // TODO: change to mainnet
         functionName: "setApprovalForAll",
         args: [staking.address as `0x${string}`, true],
         paymaster: paymaster.address as `0x${string}`,
@@ -71,13 +80,17 @@ export default function useSponsoredGame() {
     } finally {
       setButtonLoading(false);
     }
-  }, [writeContractSponsoredAsync, nftContract, staking, paymaster]);
+  }, [sessionClient, nftContract, staking, paymaster]);
 
   const mintNFT = useCallback(
     async (tokenId: number) => {
-      await writeContractSponsoredAsync({
+      if (!sessionClient?.account) return;
+
+      await sessionClient?.writeContract({
         abi: nftContract.abi as any,
         address: nftContract.address as `0x${string}`,
+        account: sessionClient.account,
+        chain: abstractTestnet, // TODO: change to mainnet
         functionName: "mint",
         args: [BigInt(tokenId)],
         paymaster: paymaster.address as `0x${string}`,
@@ -86,7 +99,7 @@ export default function useSponsoredGame() {
         }),
       });
     },
-    [writeContractSponsoredAsync, nftContract, paymaster],
+    [sessionClient, nftContract, paymaster],
   );
 
   async function stakingNFTs() {
@@ -94,17 +107,18 @@ export default function useSponsoredGame() {
       (row) => `select-time-${row.time}` === selectedTimeline,
     );
 
-    console.log({ connector });
+    if (!sessionClient?.account) return;
+    if (!selectedTimelineDetails) return;
 
     await connector[0].connect();
 
-    if (!selectedTimelineDetails) return;
     try {
-      const tx = await writeContractSponsoredAsync({
+      const tx = await sessionClient.writeContract({
         abi: staking.abi as [],
         address: staking.address as `0x${string}`,
         functionName: "batchStakeNFTs",
-        account: account.address as `0x${string}`,
+        account: sessionClient.account,
+        chain: abstractTestnet, // TODO: change to mainnet
         args: [
           nftContract.address as `0x${string}`,
           Array.from(selectedNFTs).map((nft) => BigInt(nft)),
@@ -129,14 +143,6 @@ export default function useSponsoredGame() {
       }
     } catch (e) {
       console.log(e);
-      setTimeInSecs(selectedTimelineDetails.secs);
-      setOpenModal(
-        <ShareAdventure
-          closeModal={() => {
-            setOpenModal(null);
-          }}
-        />,
-      );
     } finally {
       setButtonLoading(false);
       refetch();
@@ -156,26 +162,16 @@ export default function useSponsoredGame() {
   }
 
   async function unstakeNfts() {
+    if (!sessionClient?.account) return;
     const stakeIds = stakedNfts.map((nft) => nft.stakeId);
 
-    console.log({
-      abi: staking.abi as [],
-      address: staking.address as `0x${string}`,
-      functionName: "batchUnstakeNFTs",
-      account: account.address as `0x${string}`,
-      args: [stakeIds],
-      paymaster: paymaster.address as `0x${string}`,
-      paymasterInput: getGeneralPaymasterInput({
-        innerInput: "0x",
-      }),
-    });
-
     try {
-      await writeContractSponsoredAsync({
+      await sessionClient.writeContract({
         abi: staking.abi as [],
         address: staking.address as `0x${string}`,
         functionName: "batchUnstakeNFTs",
-        account: account.address as `0x${string}`,
+        chain: abstractTestnet, // TODO: change to mainnet
+        account: sessionClient.account,
         args: [stakeIds],
         paymaster: paymaster.address as `0x${string}`,
         paymasterInput: getGeneralPaymasterInput({
@@ -184,7 +180,6 @@ export default function useSponsoredGame() {
       });
 
       window.location.href = "/craft";
-      // router.push("/craft");
     } catch (e) {
       console.log(e);
     } finally {

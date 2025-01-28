@@ -3,6 +3,9 @@
 import { FaChevronLeft } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import Button from "../ui/Button";
+import { useAbstractClient } from "@abstract-foundation/agw-react";
+import { useEffect } from "react";
+import { useAccount } from "wagmi";
 
 export interface GameFooterProps {
   backButton: {
@@ -38,6 +41,21 @@ export default function GameFooter(
     },
   },
 ) {
+  const { data: agwClient } = useAbstractClient();
+  const account = useAccount();
+
+  useEffect(() => {
+    if (agwClient) {
+      console.log("loggins", agwClient, account);
+
+      agwClient
+        .getLinkedAccounts({ agwAddress: agwClient.account.address })
+        .then((accounts) => {
+          console.log({ accounts });
+        });
+    }
+  }, [agwClient, account]);
+
   return (
     <div className="fixed bottom-0 w-full h-fit flex justify-between items-center border-t-[1px] border-lightGold px-[32px] py-[16px] bg-black z-10">
       {props.backButton.visible ? (

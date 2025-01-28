@@ -13,6 +13,9 @@ import useTimer from "@/hooks/useTimer";
 import useSponsoredGame from "./useSponsoredGame";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
+import useSessionKey from "@/hooks/useSessionKey";
+import { useAbstractClient } from "@abstract-foundation/agw-react";
+import useSessionKeyState from "@/hooks/useSessionKey";
 
 type GameLayoutProps = {
   children: React.ReactNode;
@@ -46,8 +49,20 @@ const GameLayout = ({
     setTimeInSecs,
   } = useGameContext();
   const progressTimer = useTimer(timeInSecs);
-  const { stakingNFTs, unstakeNfts, isApproved, approveNFT } =
-    useSponsoredGame();
+  const { session, sessionReady, createNewSession } = useSessionKeyState();
+  const { stakingNFTs, unstakeNfts, isApproved, approveNFT } = useSponsoredGame(
+    { sessionClient: session },
+  );
+
+  const { data: agwClient, isFetched } = useAbstractClient();
+
+  useEffect(() => {
+    if (isFetched) {
+      if (!agwClient?.account) {
+        location.href = "/signin";
+      }
+    }
+  }, [agwClient, isFetched]);
 
   const footerProps: Record<GameState, GameFooterProps> = {
     selectNFT: {
@@ -140,7 +155,11 @@ const GameLayout = ({
 
   if (openInstructionModal) {
     return (
-      <InstructionsOfGame closeModal={() => setOpenInstructionModal(false)} />
+      <InstructionsOfGame
+        closeModal={() => setOpenInstructionModal(false)}
+        createSession={createNewSession}
+        sessionReady={sessionReady}
+      />
     );
   }
 

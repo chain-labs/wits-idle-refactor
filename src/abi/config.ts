@@ -16,7 +16,6 @@ export const CONTRACTS: ContractAddresses = {
     [abstractTestnet.id]: "0xc7EA500a11e2491D1217EDe3C6F3931F699c5716",
   },
   payMaster: {
-    // [abstractTestnet.id]: "0x62aff60940841bBe7261dc6C4bb873F6f91fFdb3",
-    [abstractTestnet.id]: "0x5407B5040dec3D339A9247f3654E59EEccbb6391",
+    [abstractTestnet.id]: "0x62aff60940841bBe7261dc6C4bb873F6f91fFdb3",
   },
 };

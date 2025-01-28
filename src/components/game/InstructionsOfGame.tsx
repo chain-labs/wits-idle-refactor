@@ -8,16 +8,23 @@ import { useAccount, useReadContract } from "wagmi";
 import useStaking from "@/abi/Staking";
 import usePayMaster from "@/abi/PayMaster";
 import { getGeneralPaymasterInput } from "viem/zksync";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { IMAGEKIT_BG } from "@/images";
 import Button from "../ui/Button";
+import { handleClientScriptLoad } from "next/script";
 
 export default function InstructionsOfGame({
   closeModal,
+  createSession,
+  sessionReady,
 }: {
   closeModal: () => void;
+  createSession: () => void;
+  sessionReady: boolean;
 }) {
   const account = useAccount();
+
+  const [buttonLoading, setButtonLoading] = useState(false);
 
   return (
     <div
@@ -59,9 +66,25 @@ export default function InstructionsOfGame({
         <p>5. Sit back and wait.</p>
         <p>6. Collect your loot!</p>
         {account ? (
-          <Button className="mt-[10px] z-10 scale-[0.75]" onClick={closeModal}>
-            START GAME
-          </Button>
+          sessionReady ? (
+            <Button
+              className="mt-[10px] z-10 scale-[0.75]"
+              onClick={closeModal}
+            >
+              START GAME
+            </Button>
+          ) : (
+            <Button
+              className="mt-[10px] z-10 scale-[0.75] text-lg"
+              isLoading={buttonLoading}
+              onClick={() => {
+                setButtonLoading(true);
+                createSession();
+              }}
+            >
+              Create Session
+            </Button>
+          )
         ) : (
           <Button className="mt-[10px] z-10 scale-[0.75]">SIGN IN</Button>
         )}

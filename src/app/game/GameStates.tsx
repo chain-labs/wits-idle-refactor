@@ -7,6 +7,8 @@ import useTimer from "@/hooks/useTimer";
 import SelectingNFTS from "@/components/game/SelectYourNFT";
 import StakingNFTs from "@/components/game/LockingNFTs";
 import dynamic from "next/dynamic";
+import { SessionClient } from "@abstract-foundation/agw-client/sessions";
+import useSessionKeyState from "@/hooks/useSessionKey";
 
 type GameStatesProps = {
   ownedNfts: NFTData[];
@@ -19,6 +21,7 @@ export const GameStates = ({
   stakedNfts,
   refetchNfts,
 }: GameStatesProps) => {
+  const { session } = useSessionKeyState();
   const {
     state,
     selectedNFTs,
@@ -36,6 +39,7 @@ export const GameStates = ({
         setSelectedNFTs={setSelectedNFTs}
         ownedNfts={ownedNfts}
         refetchNfts={refetchNfts}
+        sessionClient={session}
       />
     ),
     sendingNFTsToAdventure: (

@@ -9,14 +9,14 @@ import { useCallback, useEffect } from "react";
 import { getGeneralPaymasterInput } from "viem/zksync";
 import { useAccount } from "wagmi";
 import { useGameContext } from "./GameContext";
+import useSessionKeyState from "@/hooks/useSessionKey";
+import { abstractTestnet } from "viem/chains";
 
 const useMintNft = () => {
+  const { session } = useSessionKeyState();
   const nftContract = useNFTs();
   const paymaster = usePayMaster();
-  const account = useAccount();
   const { setButtonLoading } = useGameContext();
-  const { writeContractSponsoredAsync: mintNFTWrite } =
-    useWriteContractSponsored();
 
   const { data: nft } = useGQLFetch<{
     nftOwnerships: {
@@ -42,11 +42,14 @@ const useMintNft = () => {
 
   const mintNFT = useCallback(
     async (refechNfts: () => void) => {
+      if (!session) return;
       const id = Number(nft?.nftOwnerships.items[3].nftTokenId) + 1;
       try {
-        await mintNFTWrite({
+        await session?.writeContract({
           abi: nftContract.abi as any,
           address: nftContract.address as `0x${string}`,
+          account: session.account,
+          chain: abstractTestnet,
           functionName: "mint",
           args: [BigInt(id)],
           paymaster: paymaster.address as `0x${string}`,
@@ -61,7 +64,7 @@ const useMintNft = () => {
         setButtonLoading(false);
       }
     },
-    [mintNFTWrite, nftContract, paymaster, nft],
+    [nftContract, paymaster, nft, session],
   );
 
   return { mintNFT };

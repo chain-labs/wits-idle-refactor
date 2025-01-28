@@ -10,28 +10,32 @@ import Button from "@/components/ui/Button";
 import { useAccount } from "wagmi";
 import { useLoginWithAbstract } from "@abstract-foundation/agw-react";
 import dynamic from "next/dynamic";
+import useSessionKeyState from "@/hooks/useSessionKey";
 
 function SignIn() {
   const account = useAccount();
   const { login } = useLoginWithAbstract();
-  const router = useRouter();
+  const { createNewSession, sessionReady } = useSessionKeyState();
 
   useEffect(() => {
-    if (account.address !== undefined) {
-      console.log("account", account);
+    if (account.address && sessionReady) {
       location.href = "/";
       console.log("redirecting to home page");
     }
-  }, [account]);
+  }, [account, sessionReady]);
 
   return (
     <Button
       type="submit"
-      onClick={login}
+      onClick={account.address ? createNewSession : login}
       className="absolute bottom-0 left-1/2 translate-y-1/2 -translate-x-1/2 mx-auto whitespace-nowrap"
     >
       {account.address !== undefined ? (
-        <span className={cn("text-center w-full")}>Continue</span>
+        sessionReady ? (
+          <span className={cn("text-center w-full")}>Continue</span>
+        ) : (
+          <span className={cn("text-center w-full")}>Start Session</span>
+        )
       ) : (
         <span className="text-center w-full">Signin</span>
       )}
@@ -73,9 +77,11 @@ function AuthContent() {
                 </div>
               </div>
             </div>
-            <h1 className="uppercase text-lightGold text-[36px] font-bold text-center w-full">
-              LOGIN / REGISTER
-            </h1>
+            {
+              <h1 className="uppercase text-lightGold text-[36px] font-bold text-center w-full">
+                LOGIN / REGISTER
+              </h1>
+            }
             <small className="uppercase tracking-[0.08em] text-[#797979] text-[10px] text-center mx-auto">
               This platform is using abstract native wallet
             </small>

@@ -103,7 +103,14 @@ export default function Header({
               SIGNIN
             </a>
           ) : (
-            <button onClick={logout}>LOGOUT</button>
+            <button
+              onClick={() => {
+                localStorage.removeItem("agw_sessionKeyStore");
+                logout();
+              }}
+            >
+              LOGOUT
+            </button>
           )}
         </div>
       </div>

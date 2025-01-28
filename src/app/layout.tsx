@@ -4,6 +4,7 @@ import { beaufortPro } from "../fonts";
 import AbstractProvider from "./AbstractProvider";
 import MusicWrapper from "./MusicWrapper";
 import UserDataContext from "./UserDataContext";
+import { SessionKeyProvider } from "@/components/global/SessionKeyContext";
 
 export const metadata: Metadata = {
   title: "WITS IDLE",
@@ -20,10 +21,12 @@ export default function RootLayout({
       <body className={beaufortPro.className}>
         <AbstractProvider>
           <UserDataContext>
-            <MusicWrapper>
-              <div id="modal" className="fixed z-50"></div>
-              {children}
-            </MusicWrapper>
+            <SessionKeyProvider>
+              <MusicWrapper>
+                <div id="modal" className="fixed z-50"></div>
+                {children}
+              </MusicWrapper>
+            </SessionKeyProvider>
           </UserDataContext>
         </AbstractProvider>
       </body>
