@@ -78,8 +78,6 @@ export default function useSponsoredGame({
     } catch (e) {
       console.log(e);
       throw e;
-    } finally {
-      setButtonLoading(false);
     }
   }, [sessionClient, nftContract, staking, paymaster]);
 
