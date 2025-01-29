@@ -17,6 +17,6 @@ const isTrue = (value: string): boolean => {
   return value.toLowerCase() === "true";
 };
 export const envVars = {
-  TEST_NETWORK: isTrue(getEnvVar("NEXT_PUBLIC_TEST_NETWORK", false)),
+  TEST_NETWORK: isTrue(process.env.NEXT_PUBLIC_ABSTRACT_TESTNET_TOGGLE || ""),
   // Add more environment variables here
 };
