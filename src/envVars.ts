@@ -3,8 +3,12 @@ interface EnvVars {
   TEST_NETWORK: boolean;
 }
 
-const getEnvVar = (key: string, required: boolean = true): string => {
-  const value = process.env[key];
+const getEnvVar = (
+  key: string,
+  value: string | undefined,
+  required: boolean = true,
+): string => {
+  console.log({ value, key });
 
   if (!value && required) {
     throw new Error(`Environment variable ${key} is not set`);
@@ -17,6 +21,12 @@ const isTrue = (value: string): boolean => {
   return value.toLowerCase() === "true";
 };
 export const envVars = {
-  TEST_NETWORK: isTrue(process.env.NEXT_PUBLIC_ABSTRACT_TESTNET_TOGGLE || ""),
+  TEST_NETWORK: isTrue(
+    getEnvVar(
+      "NEXT_PUBLIC_TEST_NETWORK",
+      process.env.NEXT_PUBLIC_TEST_NETWORK || "",
+      false,
+    ),
+  ),
   // Add more environment variables here
 };

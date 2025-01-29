@@ -12,17 +12,16 @@ import { useEffect, useState } from "react";
 import { IMAGEKIT_BG } from "@/images";
 import Button from "../ui/Button";
 import { handleClientScriptLoad } from "next/script";
+import useSessionKeyState from "@/hooks/useSessionKey";
 
 export default function InstructionsOfGame({
   closeModal,
-  createSession,
-  sessionReady,
 }: {
   closeModal: () => void;
-  createSession: () => void;
-  sessionReady: boolean;
 }) {
   const account = useAccount();
+
+  const { createNewSession, sessionReady } = useSessionKeyState();
 
   const [buttonLoading, setButtonLoading] = useState(false);
 
@@ -79,7 +78,7 @@ export default function InstructionsOfGame({
               isLoading={buttonLoading}
               onClick={() => {
                 setButtonLoading(true);
-                createSession();
+                createNewSession();
               }}
             >
               Create Session

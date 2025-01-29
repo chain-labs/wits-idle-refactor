@@ -156,11 +156,7 @@ const GameLayout = ({
 
   if (openInstructionModal) {
     return (
-      <InstructionsOfGame
-        closeModal={() => setOpenInstructionModal(false)}
-        createSession={createNewSession}
-        sessionReady={sessionReady}
-      />
+      <InstructionsOfGame closeModal={() => setOpenInstructionModal(false)} />
     );
   }
 

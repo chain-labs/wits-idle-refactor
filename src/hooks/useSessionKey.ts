@@ -1,11 +1,11 @@
 import useNFTs from "@/abi/Nfts";
 import usePayMaster from "@/abi/PayMaster";
 import useStaking from "@/abi/Staking";
+import { AGW_PAYMASTER } from "@/constants";
 
 import {
   LimitType,
   SessionClient,
-  SessionConfig,
 } from "@abstract-foundation/agw-client/sessions";
 
 import { useAbstractClient } from "@abstract-foundation/agw-react";
@@ -13,8 +13,6 @@ import { useEffect, useMemo, useState } from "react";
 import { parseEther, toFunctionSelector } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { getGeneralPaymasterInput } from "viem/zksync";
-
-const AGW_PAYMASTER = "0x5407B5040dec3D339A9247f3654E59EEccbb6391";
 
 export interface SessionKeyState {
   session: SessionClient | null;
@@ -25,7 +23,6 @@ export interface SessionKeyState {
 const useSessionKeyState = (): SessionKeyState => {
   const nftContract = useNFTs();
   const staking = useStaking();
-  const paymaster = usePayMaster();
   const { data: agwClient, status } = useAbstractClient();
 
   const [currentSession, setCurrentSession] = useState<SessionClient | null>(
