@@ -1,4 +1,4 @@
-import { abstractTestnet } from "viem/chains";
+import { abstract, abstractTestnet } from "viem/chains";
 
 interface IContract {
   address?: `0x${string}`;
@@ -9,6 +9,7 @@ import abi from "./abi.json";
 import { CONTRACTS } from "../config";
 import { zeroAddress } from "viem";
 import { useEffect, useState } from "react";
+import { envVars } from "@/envVars";
 
 const useStaking = () => {
   const [contract, setContract] = useState<IContract>({
@@ -17,7 +18,9 @@ const useStaking = () => {
   });
 
   useEffect(() => {
-    const address = CONTRACTS.staking[abstractTestnet.id];
+    const chainId = envVars.TEST_NETWORK ? abstractTestnet.id : abstract.id;
+
+    const address = CONTRACTS.staking[chainId];
     if (address) {
       setContract({ address, abi });
     }

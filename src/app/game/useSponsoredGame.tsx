@@ -12,9 +12,9 @@ import { useAccount, useConnectors, useReadContract } from "wagmi";
 import ShareAdventure from "@/components/game/ShareAdventure";
 import { useNFTManager } from "./useNFTManager";
 import { IMAGEKIT_IMAGES } from "@/images";
-import useSessionKey from "@/hooks/useSessionKey";
 import { SessionClient } from "@abstract-foundation/agw-client/sessions";
-import { abstractTestnet } from "viem/chains";
+import { abstract, abstractTestnet } from "viem/chains";
+import { envVars } from "@/envVars";
 
 export default function useSponsoredGame({
   sessionClient,
@@ -66,7 +66,7 @@ export default function useSponsoredGame({
         abi: nftContract.abi as any,
         address: nftContract.address as `0x${string}`,
         account: sessionClient.account,
-        chain: abstractTestnet, // TODO: change to mainnet
+        chain: envVars.TEST_NETWORK ? abstractTestnet : abstract, // TODO: change to mainnet
         functionName: "setApprovalForAll",
         args: [staking.address as `0x${string}`, true],
         paymaster: paymaster.address as `0x${string}`,
@@ -91,7 +91,7 @@ export default function useSponsoredGame({
         abi: nftContract.abi as any,
         address: nftContract.address as `0x${string}`,
         account: sessionClient.account,
-        chain: abstractTestnet, // TODO: change to mainnet
+        chain: envVars.TEST_NETWORK ? abstractTestnet : abstract, // TODO: change to mainnet
         functionName: "mint",
         args: [BigInt(tokenId)],
         paymaster: paymaster.address as `0x${string}`,
@@ -119,7 +119,7 @@ export default function useSponsoredGame({
         address: staking.address as `0x${string}`,
         functionName: "batchStakeNFTs",
         account: sessionClient.account,
-        chain: abstractTestnet, // TODO: change to mainnet
+        chain: envVars.TEST_NETWORK ? abstractTestnet : abstract, // TODO: change to mainnet
         args: [
           nftContract.address as `0x${string}`,
           Array.from(selectedNFTs).map((nft) => BigInt(nft)),
@@ -172,7 +172,7 @@ export default function useSponsoredGame({
         abi: staking.abi as [],
         address: staking.address as `0x${string}`,
         functionName: "batchUnstakeNFTs",
-        chain: abstractTestnet, // TODO: change to mainnet
+        chain: envVars.TEST_NETWORK ? abstractTestnet : abstract, // TODO: change to mainnet
         account: sessionClient.account,
         args: [stakeIds],
         paymaster: paymaster.address as `0x${string}`,

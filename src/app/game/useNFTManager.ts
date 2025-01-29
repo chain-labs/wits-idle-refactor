@@ -8,8 +8,9 @@ import { IMAGEKIT_IMAGES } from "@/images";
 import { NFTUserDataGQL } from "@/graphql/queryTypes";
 import { multicall } from "viem/actions";
 import useNFTs from "@/abi/Nfts";
-import { abstractTestnet } from "viem/chains";
+import { abstract, abstractTestnet } from "viem/chains";
 import { createPublicClient, http } from "viem";
+import { envVars } from "@/envVars";
 
 export const useNFTManager = (account: `0x${string}` | undefined) => {
   const [ownedNfts, setOwnedNfts] = useState<NFTData[]>([]);
@@ -45,8 +46,12 @@ export const useNFTManager = (account: `0x${string}` | undefined) => {
   ): Promise<Record<string, string> | undefined> {
     if (account) {
       const client = createPublicClient({
-        chain: abstractTestnet,
-        transport: http("https://api.testnet.abs.xyz"),
+        chain: envVars.TEST_NETWORK ? abstractTestnet : abstract,
+        transport: http(
+          envVars.TEST_NETWORK
+            ? "https://api.testnet.abs.xyz"
+            : "https://api.mainnet.abs.xyz",
+        ),
       });
 
       const response = await multicall(client, {

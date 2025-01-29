@@ -10,7 +10,8 @@ import { getGeneralPaymasterInput } from "viem/zksync";
 import { useAccount } from "wagmi";
 import { useGameContext } from "./GameContext";
 import useSessionKeyState from "@/hooks/useSessionKey";
-import { abstractTestnet } from "viem/chains";
+import { abstract, abstractTestnet } from "viem/chains";
+import { envVars } from "@/envVars";
 
 const useMintNft = () => {
   const { session } = useSessionKeyState();
@@ -49,7 +50,7 @@ const useMintNft = () => {
           abi: nftContract.abi as any,
           address: nftContract.address as `0x${string}`,
           account: session.account,
-          chain: abstractTestnet,
+          chain: envVars.TEST_NETWORK ? abstractTestnet : abstract,
           functionName: "mint",
           args: [BigInt(id)],
           paymaster: paymaster.address as `0x${string}`,

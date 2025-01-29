@@ -8,14 +8,10 @@ import {
   SessionConfig,
 } from "@abstract-foundation/agw-client/sessions";
 
-import {
-  useAbstractClient,
-  useCreateSession,
-} from "@abstract-foundation/agw-react";
-import React, { useEffect, useMemo, useState } from "react";
+import { useAbstractClient } from "@abstract-foundation/agw-react";
+import { useEffect, useMemo, useState } from "react";
 import { parseEther, toFunctionSelector } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
-import { abstractTestnet } from "viem/chains";
 import { getGeneralPaymasterInput } from "viem/zksync";
 
 const AGW_PAYMASTER = "0x5407B5040dec3D339A9247f3654E59EEccbb6391";
