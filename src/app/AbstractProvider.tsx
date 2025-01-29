@@ -2,6 +2,7 @@
 
 import { envVars } from "@/envVars";
 import { AbstractWalletProvider } from "@abstract-foundation/agw-react";
+import { QueryClient } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import { http } from "viem";
 import { abstractTestnet, abstract } from "viem/chains";
@@ -13,9 +14,12 @@ import { abstractTestnet, abstract } from "viem/chains";
 //   // transport: http("https://your.abstract.node.example.com/rpc") // Optional
 // };
 
+const queryClient = new QueryClient();
+
 const AbstractProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <AbstractWalletProvider
+      queryClient={queryClient}
       chain={envVars.TEST_NETWORK ? abstractTestnet : abstract}
       transport={http(
         envVars.TEST_NETWORK

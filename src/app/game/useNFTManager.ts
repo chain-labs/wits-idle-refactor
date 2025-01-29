@@ -63,8 +63,6 @@ export const useNFTManager = (account: `0x${string}` | undefined) => {
         })),
       });
 
-      console.log("response", response);
-
       return response.reduce(
         (acc, { result }, index) => ({
           ...acc,
@@ -79,21 +77,20 @@ export const useNFTManager = (account: `0x${string}` | undefined) => {
     (async () => {
       if (userData) {
         console.log("account", account);
-
         const tokenIDS = [
-          ...userData?.users?.items[0]?.ownedNfts?.items?.map(
+          ...(userData?.users?.items[0]?.ownedNfts?.items ?? [])?.map(
             (token) => token.nftTokenId,
           ),
-          ...userData?.users?.items[0]?.stakes?.items
+          ...(userData?.users?.items[0]?.stakes?.items ?? [])
             ?.filter((token) => !token.unstakeTxId)
             .map((token) => token.nft.tokenId),
         ];
 
         const tokenAddresses = [
-          ...userData?.users?.items[0]?.ownedNfts?.items?.map(
+          ...(userData?.users?.items[0]?.ownedNfts?.items ?? [])?.map(
             (token) => token.nftContractAddress as `0x${string}`,
           ),
-          ...userData?.users?.items[0]?.stakes?.items
+          ...(userData?.users?.items[0]?.stakes?.items ?? [])
             ?.filter((token) => !token.unstakeTxId)
             .map((token) => token.nftContract.contract as `0x${string}`),
         ];
