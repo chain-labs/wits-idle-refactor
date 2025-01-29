@@ -40,6 +40,11 @@ export const useNFTManager = (account: `0x${string}` | undefined) => {
     setTrigger(true);
   };
 
+  function optimisticNFTAdd(tokenId: string) {
+    setOwnedNfts([{ tokenId: tokenId, icon: IMAGEKIT_IMAGES.NFT_ICON }]);
+    refetch();
+  }
+
   async function fetchURLData(
     tokenIDS: string[],
     tokenAddresses: `0x${string}`[],
@@ -135,5 +140,6 @@ export const useNFTManager = (account: `0x${string}` | undefined) => {
     loading,
     setStakedNfts,
     refetch,
+    optimisticNFTAdd,
   };
 };

@@ -11,9 +11,8 @@ import dynamic from "next/dynamic";
 function GamePage() {
   const [openInstructionModal, setOpenInstructionModal] = useState(true);
   const account = useAccount();
-  const { ownedNfts, stakedNfts, loading, refetch } = useNFTManager(
-    account.address as `0x${string}`,
-  );
+  const { ownedNfts, stakedNfts, loading, refetch, optimisticNFTAdd } =
+    useNFTManager(account.address as `0x${string}`);
 
   return (
     <GameProvider>
@@ -26,6 +25,7 @@ function GamePage() {
         refetchNfts={refetch}
       >
         <GameStates
+          optimisticAddNFTs={optimisticNFTAdd}
           ownedNfts={ownedNfts}
           stakedNfts={stakedNfts}
           refetchNfts={refetch}

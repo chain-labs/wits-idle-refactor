@@ -12,8 +12,13 @@ import { useGameContext } from "./GameContext";
 import useSessionKeyState from "@/hooks/useSessionKey";
 import { abstract, abstractTestnet } from "viem/chains";
 import { envVars } from "@/envVars";
+import { useNFTManager } from "./useNFTManager";
 
-const useMintNft = () => {
+const useMintNft = ({
+  optimisticNFTAdd,
+}: {
+  optimisticNFTAdd: (tokenId: string) => void;
+}) => {
   const { session } = useSessionKeyState();
   const nftContract = useNFTs();
   const paymaster = usePayMaster();
@@ -58,6 +63,7 @@ const useMintNft = () => {
             innerInput: "0x",
           }),
         });
+        optimisticNFTAdd(id.toString());
       } catch (e) {
         console.error("Minting NFT error:", e);
       } finally {

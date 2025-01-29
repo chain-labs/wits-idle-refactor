@@ -14,12 +14,14 @@ type GameStatesProps = {
   ownedNfts: NFTData[];
   stakedNfts: StakedNFT[];
   refetchNfts: () => void;
+  optimisticAddNFTs: (tokenId: string) => void;
 };
 
 export const GameStates = ({
   ownedNfts,
   stakedNfts,
   refetchNfts,
+  optimisticAddNFTs,
 }: GameStatesProps) => {
   const { session } = useSessionKeyState();
   const {
@@ -40,6 +42,7 @@ export const GameStates = ({
         ownedNfts={ownedNfts}
         refetchNfts={refetchNfts}
         sessionClient={session}
+        optimisticAddNFTs={optimisticAddNFTs}
       />
     ),
     sendingNFTsToAdventure: (

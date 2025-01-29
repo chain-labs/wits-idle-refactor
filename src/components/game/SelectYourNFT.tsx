@@ -49,6 +49,7 @@ export default function SelectingNFTS({
   refetchNfts,
   ownedNfts,
   sessionClient,
+  optimisticAddNFTs,
 }: {
   selectedNFTs: Set<string>;
   setSelectedNFTs: Dispatch<SetStateAction<Set<string>>>;
@@ -57,6 +58,7 @@ export default function SelectingNFTS({
     tokenId: string;
   }[];
   refetchNfts: () => void;
+  optimisticAddNFTs: (tokenId: string) => void;
   sessionClient: SessionClient | null;
 }) {
   function handleNFTSelect(e: React.FormEvent<HTMLFormElement>) {
@@ -72,7 +74,7 @@ export default function SelectingNFTS({
     });
   }
 
-  const { mintNFT } = useMintNft();
+  const { mintNFT } = useMintNft({ optimisticNFTAdd: optimisticAddNFTs });
 
   const { setButtonLoading, buttonLoading } = useGameContext();
 
