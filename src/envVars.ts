@@ -8,8 +8,6 @@ const getEnvVar = (
   value: string | undefined,
   required: boolean = true,
 ): string => {
-  console.log({ value, key });
-
   if (!value && required) {
     throw new Error(`Environment variable ${key} is not set`);
   }
@@ -27,6 +25,11 @@ export const envVars = {
       process.env.NEXT_PUBLIC_TEST_NETWORK || "",
       false,
     ),
+  ),
+  MINT_URL: getEnvVar(
+    "NEXT_PUBLIC_MINT_URL",
+    process.env.NEXT_PUBLIC_MINT_URL,
+    false,
   ),
   // Add more environment variables here
 };
