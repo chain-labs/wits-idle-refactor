@@ -348,7 +348,17 @@ export default function Home() {
             className="bg-black mb-[50px] py-[16px] px-[32px] w-[min(40vw,500px)] h-fit border border-lightGold text-lightGold rounded-[4px] uppercase z-10"
             disabled={Object.values(data).reduce((a, b) => a + b, 0) === 0}
             onClick={() => {
-              setOpenModal(<Reward />);
+              setOpenModal(
+                <Reward
+                  materials={{
+                    common: data.COMMON,
+                    uncommon: data.UNCOMMON,
+                    rare: data.RARE,
+                    legendary: data.LEGENDARY,
+                    mythic: data.MYTHICAL,
+                  }}
+                />,
+              );
             }}
           >
             Craft

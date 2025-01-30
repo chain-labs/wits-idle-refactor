@@ -126,7 +126,21 @@ const CraftStates = () => {
       <MaterialsWon materials={totalMaterials} nftMaterials={nftMaterials} />
     ),
     crafting: <Crafting materials={totalMaterials} />,
-    reward: <Reward />,
+    reward: (
+      <Reward
+        materials={{
+          common:
+            totalMaterials.find((m) => m.rarity === "common")?.quantity ?? 0,
+          uncommon:
+            totalMaterials.find((m) => m.rarity === "uncommon")?.quantity ?? 0,
+          rare: totalMaterials.find((m) => m.rarity === "rare")?.quantity ?? 0,
+          legendary:
+            totalMaterials.find((m) => m.rarity === "legendary")?.quantity ?? 0,
+          mythic:
+            totalMaterials.find((m) => m.rarity === "mythic")?.quantity ?? 0,
+        }}
+      />
+    ),
   };
 
   return stateComponents[state];
