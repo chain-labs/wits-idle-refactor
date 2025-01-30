@@ -78,7 +78,7 @@ function Home() {
       if (typeof window !== "undefined") {
         const localData = localStorage.getItem("userData");
         if (account.address && !localData) {
-          // setOpenModal(<GetUserData setOpenModal={setOpenModal} />);
+          setOpenModal(<GetUserData setOpenModal={setOpenModal} />);
         }
       }
     })();

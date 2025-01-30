@@ -6,7 +6,6 @@ import { FaChevronDown } from "react-icons/fa";
 import { useState } from "react";
 import { cn } from "@/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { IMAGEKIT_IMAGES } from "@/images";
 import GlowingH1 from "../ui/GlowingH1";
 import { CraftMaterial, NFTCraftMaterial } from "@/app/craft/craft";
 

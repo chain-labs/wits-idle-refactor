@@ -131,6 +131,17 @@ export default function useSponsoredGame({
 
       if (tx) {
         setTimeInSecs(selectedTimelineDetails.secs);
+        setStakedNfts([
+          {
+            icon: IMAGEKIT_IMAGES.NFT_ICON,
+            endTime: String(
+              new Date().getTime() / 1000 + selectedTimelineDetails.secs,
+            ),
+            tokenId: Array.from(selectedNFTs)[0],
+            stakeId: BigInt(Array.from(selectedNFTs)[0]),
+            duration: selectedTimelineDetails.time,
+          },
+        ]);
         setOpenModal(
           <ShareAdventure
             closeModal={() => {
@@ -156,6 +167,7 @@ export default function useSponsoredGame({
         endTime: String(new Date().getTime() / 1000 + (secs ?? 0)),
         tokenId: Array.from(selectedNFTs)[0],
         stakeId: BigInt(Array.from(selectedNFTs)[0]),
+        duration: String(secs),
       },
     ]);
     setState("adventureInProgress");
@@ -179,7 +191,9 @@ export default function useSponsoredGame({
         }),
       });
 
-      window.location.href = "/craft";
+      window.location.href = `/craft?duration=${
+        stakedNfts[0].duration
+      }&tokenIds=${stakedNfts.map((nft) => nft.tokenId).join(",")}`;
     } catch (e) {
       console.log(e);
     } finally {

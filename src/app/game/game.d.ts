@@ -21,4 +21,5 @@ export type NFTData = {
 export type StakedNFT = NFTData & {
   endTime: string;
   stakeId: bigint;
+  duration: string;
 };

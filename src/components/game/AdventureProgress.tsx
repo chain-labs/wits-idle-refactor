@@ -7,8 +7,12 @@ function TimerWithLabel({ label, value }: { label: string; value: number }) {
     <div className="flex flex-col justify-center items-center">
       <h1 className="font-bold text-[48px]">
         <div className="flex justify-center items-center overflow-hidden">
-          <AnimateNumber num={Number(String(value).padStart(2, "0")[0])} />
-          <AnimateNumber num={Number(String(value).padStart(2, "0")[1])} />
+          {String(value)
+            .padStart(2, "0")
+            .split("")
+            .map((digit, index) => (
+              <AnimateNumber key={index} num={Number(digit)} />
+            ))}
         </div>
       </h1>
       <p className="text-[12px] uppercase">{label}</p>

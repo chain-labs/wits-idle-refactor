@@ -22,6 +22,9 @@ export const GET_USER_NFTS = gql`
             nftContract {
               contract
             }
+            duration {
+              duration
+            }
           }
         }
       }

@@ -51,8 +51,12 @@ function CraftItem(craft: CraftMaterial) {
 
           <div className="flex justify-center items-center gap-[8px] w-full">
             <div className="flex justify-center items-center overflow-hidden">
-              <AnimateNumber num={Number(String(count).padStart(2, "0")[0])} />
-              <AnimateNumber num={Number(String(count).padStart(2, "0")[1])} />
+              {String(count)
+                .padStart(2, "0")
+                .split("")
+                .map((digit, index) => (
+                  <AnimateNumber key={index} num={Number(digit)} />
+                ))}
             </div>
             {craft.rarity}
           </div>

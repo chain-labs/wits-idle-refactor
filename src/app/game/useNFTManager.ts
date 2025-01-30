@@ -120,6 +120,7 @@ export const useNFTManager = (account: `0x${string}` | undefined) => {
                 : IMAGEKIT_IMAGES.NFT_ICON,
               endTime: token.endTime,
               tokenId: token.nft.tokenId,
+              duration: token.duration.duration,
             })) ?? [];
 
         console.log("userData", user);

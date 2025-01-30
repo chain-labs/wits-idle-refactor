@@ -1,10 +1,24 @@
 import { Materials } from "./types";
+import sha1 from "sha1";
 
-export function calculateMaterials(stakingTimeInSecs: number): Materials {
+export function calculateMaterials(
+  stakingTimeInSecs: number,
+  tokenId: string,
+  address: `0x${string}`,
+): Materials {
   const hours = stakingTimeInSecs / 3600;
   let probabilities;
+  const uniqueId = sha1(`${address}-${tokenId}-${stakingTimeInSecs}`);
 
-  if (hours <= 24) {
+  if (hours <= 1) {
+    probabilities = {
+      common: 90,
+      uncommon: 5,
+      rare: 3,
+      legendary: 1,
+      mythic: 1,
+    };
+  } else if (hours <= 24) {
     probabilities = {
       common: 70,
       uncommon: 20,
@@ -38,11 +52,16 @@ export function calculateMaterials(stakingTimeInSecs: number): Materials {
     };
   }
 
+  // Convert uniqueId to a number sequence for consistent randomization
+  const hash = BigInt(`0x${uniqueId}`);
+  const rand = Number(hash % BigInt(10000)) / 400; // Get a number between 0-100
+
+  // Determine materials based on probability thresholds
   return {
-    common: Math.floor(Math.random() * 3),
-    uncommon: Math.floor(Math.random() * 2),
-    rare: Math.floor(Math.random() * 2),
-    legendary: Math.floor(Math.random()),
-    mythic: Math.floor(Math.random()),
+    common: Math.floor((rand / 100) * probabilities.common),
+    uncommon: Math.floor((rand / 100) * probabilities.uncommon),
+    rare: Math.floor((rand / 100) * probabilities.rare),
+    legendary: Math.floor((rand / 100) * probabilities.legendary),
+    mythic: Math.floor((rand / 100) * probabilities.mythic),
   };
 }

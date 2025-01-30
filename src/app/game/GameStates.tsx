@@ -52,7 +52,7 @@ export const GameStates = ({
         selectedTimeline={selectedTimeline}
       />
     ),
-    adventureInProgress: stakedNfts.length && (
+    adventureInProgress: !!stakedNfts.length && (
       <AdventureProgress time={progressTimer} />
     ),
   };

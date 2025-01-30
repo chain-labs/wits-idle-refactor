@@ -14,6 +14,9 @@ export interface NFTUserDataGQL {
           nftContract: {
             contract: string;
           };
+          duration: {
+            duration: string;
+          };
         }[];
       };
     }[];

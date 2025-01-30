@@ -89,7 +89,9 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: materialsData } = useRestFetch<{
     status: string;
     materials: MaterialsData;
-  }>(["userMaterials"], "/userMaterials", { enabled: !!account.address });
+  }>(["userMaterials"], `/userMaterials/${account.address}`, {
+    enabled: !!account.address,
+  });
 
   useEffect(() => {
     if (materialsData) {
