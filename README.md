@@ -46,3 +46,188 @@ Before deploying to Vercel:
 3. Verify that all mainnet configurations are properly set up as described in the Mainnet Configuration section
 
 Check your deployment preview to confirm everything works as expected before deploying to production.
+
+
+# API ENDPOINTS
+
+This endpoints are necessary for the project to work. and in the data should be accepted and sent in the format mentioned below.
+
+### Backend Configuration
+
+The backend URL should be configured in the `constants.ts` file:
+
+```typescript
+export const API_ENDPOINT = 'https://api.your-backend-domain.com'
+```
+
+All API endpoints mentioned below will be prefixed with this base URL.
+
+
+## UNSTAKING
+
+endpoint :- `/unstaking`
+
+method :- `POST`
+
+params :- 
+```
+{
+    "address": string,
+    "tokenId": string,
+    "stakingTimeInSecs": number
+}
+```
+
+response :- 
+```
+    {
+        "status": "success",
+        "materials": {
+            "common": number,
+            "uncommon": number,
+            "rare": number,
+            "legendary": number
+            "mythic": number
+        }
+    }
+```
+
+description: This are the materials that user have won by unstaking the nft. This should be generated only after unstaking is completed successfully.
+
+## USER MATERIALS
+
+endpoint :- `/userMaterials/:address`
+
+method :- `GET`
+
+params :- `address` (string)
+
+response :- 
+```
+    {
+        "status": "success",
+        "materials": {
+            used: {
+                "common": number,
+                "uncommon": number,
+                "rare": number,
+                "legendary": number
+                "mythic": number
+            },
+            unused: {
+                "common": number,
+                "uncommon": number,
+                "rare": number,
+                "legendary": number
+                "mythic": number
+            }
+            progress:{ 
+                "common": number,
+                "uncommon": number,
+                "rare": number,
+                "legendary": number
+                "mythic": number
+            }
+        }
+    }
+```
+
+description: This are the materials that user have.
+
+## Reward
+
+endpoint :- `/reward`
+
+method :- `POST`
+
+params :- 
+```
+{
+    "address": string,
+    "materials": {
+        "common": number,
+        "uncommon": number,
+        "rare": number,
+        "legendary": number
+        "mythic": number
+    }
+}
+```
+
+response :- 
+```
+    {
+        "status": "success",
+        "message": "Rewards added successfully"
+        "data": {
+            "rewardImageUrl": string,
+            "rewardName": string
+        }
+    }
+```
+
+description: This endpoint is used to add rewards to the usersList.
+
+
+## User Rewards
+
+endpoint :- `/userRewards/:address`
+
+method :- `GET`
+
+params :- `address` (string)
+
+response :- 
+```
+    {
+        "status": "success",
+        "data": [
+            {
+                "rewardsList": [
+                    {
+                        "rewardId": string,
+                        "rewardImageUrl": string,
+                        "rewardName": string,
+                        "dateTime": number,
+                        "rewardRarity": string
+                    }
+                ]
+            }
+        ]
+    }
+```
+
+description: This are the rewards that user have won.
+
+## SHIPPING
+
+endpoint :- `/shipping`
+
+method :- `POST`
+
+params :- 
+```
+{
+    "address": string,
+    "email": string,
+    "firstName": string,
+    "lastName": string,
+    "address": string,
+    "country": string,
+    "city": string,
+    "province": string,
+    "postalCode": string,
+    "optional": string,
+    "rewardId": string,
+}
+```
+
+response :- 
+```
+    {
+        "status": "success",
+        "message": "Shipping details added successfully"
+    }
+```
+
+description: This endpoint is used to add shipping details to the usersList.
