@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { ShippingDetails } from "../types";
 export async function POST(request: Request) {
   try {
     const shippingDetails: ShippingDetails = await request.json();

@@ -11,6 +11,7 @@ import dynamic from "next/dynamic";
 import { Address } from "viem";
 import { useAccount } from "wagmi";
 import { useRestFetch } from "@/hooks/api/useRestClient";
+import { Materials } from "./api/types";
 
 type MaterialsData = {
   used: Materials;

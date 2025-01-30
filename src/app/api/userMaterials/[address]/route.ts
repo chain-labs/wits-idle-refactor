@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import sha1 from "sha1";
+import { Materials } from "../../types";
 
 export async function GET(
   req: NextRequest,
