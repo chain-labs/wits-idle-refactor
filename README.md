@@ -16,10 +16,10 @@ cp .env.example .env
 
 # Environment Variables Documentation
 
-## `NEXT_PUBLIC_TEST_NETWORK`
+### `NEXT_PUBLIC_TEST_NETWORK`
 Network identifier for testing environment. Used to configure which blockchain test network the application connects to.
 
-## `NEXT_PUBLIC_MINT_URL`
+### `NEXT_PUBLIC_MINT_URL`
 URL where users can be sent to for minting NFTs
 
 
