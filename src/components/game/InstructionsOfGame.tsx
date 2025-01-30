@@ -74,7 +74,7 @@ export default function InstructionsOfGame({
             </Button>
           ) : (
             <Button
-              className="mt-[10px] z-10 scale-[0.75] text-lg"
+              className="mt-[10px] z-10 scale-[0.75] text-lg text-nowrap"
               isLoading={buttonLoading}
               onClick={() => {
                 setButtonLoading(true);
