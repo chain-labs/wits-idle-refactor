@@ -1,6 +1,7 @@
 "use client";
 import { IoStar } from "react-icons/io5";
 import GlowingH1 from "../ui/GlowingH1";
+import Button from "../ui/Button";
 
 export default function Reward() {
   return (
@@ -17,6 +18,9 @@ export default function Reward() {
         <button className="bg-black border-[1px] border-[#797979] text-[#797979] uppercase w-fit px-[32px] py-[8px] mx-auto rounded-[4px]">
           IPHONE 12 PRO
         </button>
+        <a href="/prizes" className="mx-auto">
+          <Button className="text-nowrap">Grab the Prize</Button>
+        </a>
       </div>
     </div>
   );

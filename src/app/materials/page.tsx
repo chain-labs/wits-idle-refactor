@@ -347,7 +347,7 @@ export default function Home() {
           <button
             type="button"
             className="bg-black mb-[50px] py-[16px] px-[32px] w-[min(40vw,500px)] h-fit border border-lightGold text-lightGold rounded-[4px] uppercase z-10"
-            // disabled={Object.values(data).reduce((a, b) => a + b, 0) === 0}
+            disabled={Object.values(data).reduce((a, b) => a + b, 0) === 0}
             onClick={() => {
               setOpenModal(<Reward />);
             }}
@@ -358,7 +358,11 @@ export default function Home() {
       </div>
       {openModal && (
         <Modal>
-          <ModalRevealAnimation>{openModal}</ModalRevealAnimation>
+          <ModalRevealAnimation>
+            <div className="bg-black backdrop-blur-lg w-full h-full flex justify-center items-center">
+              {openModal}
+            </div>
+          </ModalRevealAnimation>
         </Modal>
       )}
     </>
