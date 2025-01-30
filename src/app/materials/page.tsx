@@ -107,7 +107,6 @@ function CraftItem({
 
 export default function Home() {
   const { materials: userMaterials } = useUserDataContext();
-  console.log("userMaterials", userMaterials);
 
   const [openModal, setOpenModal] = useState<null | React.ReactNode>(null);
 

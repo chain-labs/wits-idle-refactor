@@ -54,7 +54,6 @@ export default function useSponsoredGame({
 
   useEffect(() => {
     if (approvalFetched) {
-      console.log({ isApprovedForAllData, bool: !!isApprovedForAllData });
       setIsApproved(!!isApprovedForAllData);
     }
   }, [isApprovedForAllData, approvalFetched]);

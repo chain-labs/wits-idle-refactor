@@ -98,7 +98,6 @@ const GameLayout = ({
         visible: true,
         disabled: selectedTimeline === null,
         function: async () => {
-          console.log({ isApproved });
           setButtonLoading(true);
           try {
             if (!isApproved) {

@@ -43,12 +43,6 @@ const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [openModal, setOpenModal] = useState<React.ReactNode | null>(null);
   const [buttonLoading, setButtonLoading] = useState(false);
 
-  useEffect(() => {
-    if (openModal) {
-      console.log({ openModal });
-    }
-  }, [openModal]);
-
   return (
     <GameContext.Provider
       value={{

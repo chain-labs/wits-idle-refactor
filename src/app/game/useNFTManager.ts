@@ -123,10 +123,6 @@ export const useNFTManager = (account: `0x${string}` | undefined) => {
               duration: token.duration.duration,
             })) ?? [];
 
-        console.log("userData", user);
-        console.log("owned", owned);
-        console.log("stakes", stakes);
-
         setOwnedNfts(owned);
         setStakedNfts(stakes);
         setLoading(false);

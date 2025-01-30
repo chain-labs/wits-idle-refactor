@@ -127,15 +127,6 @@ export default function Materials() {
     }
   }, [adventures]);
 
-  console.log({
-    data,
-    totalCount,
-    flat: Object.values(data).flat(),
-    nextPageAvailable,
-    adventures: !adventures,
-    isRefetching,
-  });
-
   return (
     <div className="relative min-h-screen w-full bg-cover bg-center overflow-x-hidden bg-blend-multiply bg-opacity-10 z-0">
       <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-black via-[#0000] to-black z-[-1]"></div>

@@ -91,7 +91,6 @@ const CraftStates = () => {
                 "common" | "uncommon" | "rare" | "legendary" | "mythic",
                 number,
               ][]) {
-                console.log("rarity", rarity, value);
                 totalCraftsMaterials.push({
                   rarity: rarity,
                   quantity: value,

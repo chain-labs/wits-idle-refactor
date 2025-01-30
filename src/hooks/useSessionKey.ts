@@ -53,7 +53,6 @@ const useSessionKeyState = (): SessionKeyState => {
 
     const sessionPrivateKey = generatePrivateKey();
     const sessionSigner = privateKeyToAccount(sessionPrivateKey);
-    console.log({ sessionSigner });
 
     const { session, transactionHash } = await agwClient.createSession({
       session: {

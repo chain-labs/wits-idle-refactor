@@ -3,16 +3,13 @@
 import useNFTs from "@/abi/Nfts";
 import usePayMaster from "@/abi/PayMaster";
 import { useGQLFetch } from "@/hooks/api/useGraphQLClient";
-import { useWriteContractSponsored } from "@abstract-foundation/agw-react";
 import { gql } from "graphql-request";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { getGeneralPaymasterInput } from "viem/zksync";
-import { useAccount, useCall } from "wagmi";
 import { useGameContext } from "./GameContext";
 import useSessionKeyState from "@/hooks/useSessionKey";
 import { abstract, abstractTestnet } from "viem/chains";
 import { envVars } from "@/envVars";
-import { useNFTManager } from "./useNFTManager";
 
 const useMintNft = ({
   optimisticNFTAdd,

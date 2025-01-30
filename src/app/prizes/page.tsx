@@ -49,8 +49,6 @@ export default function Home() {
 
   const { rewards: userRewards } = useUserDataContext();
 
-  console.log("userRewards", userRewards);
-
   const [openModal, setOpenModal] = useState<null | React.ReactNode>(null);
 
   const postReq = useRestPost<ShippingDetails>(["/shipping"], "/shiping");

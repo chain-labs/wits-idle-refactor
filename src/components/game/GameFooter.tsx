@@ -44,18 +44,6 @@ export default function GameFooter(
   const { data: agwClient } = useAbstractClient();
   const account = useAccount();
 
-  useEffect(() => {
-    if (agwClient) {
-      console.log("loggins", agwClient, account);
-
-      agwClient
-        .getLinkedAccounts({ agwAddress: agwClient.account.address })
-        .then((accounts) => {
-          console.log({ accounts });
-        });
-    }
-  }, [agwClient, account]);
-
   return (
     <div className="fixed bottom-0 w-full h-fit flex justify-between items-center border-t-[1px] border-lightGold px-[32px] py-[16px] bg-black z-10">
       {props.backButton.visible ? (

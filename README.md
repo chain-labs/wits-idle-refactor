@@ -5,32 +5,44 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
 bun dev
 ```
 
+Copy the environment variables file to create your local environment:
+
+```bash
+cp .env.example .env
+```
+
+# Environment Variables Documentation
+
+## `NEXT_PUBLIC_TEST_NETWORK`
+Network identifier for testing environment. Used to configure which blockchain test network the application connects to.
+
+## `NEXT_PUBLIC_MINT_URL`
+URL where users can be sent to for minting NFTs
+
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Mainnet Configuration Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To configure the application for mainnet:
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. In `config.ts`, update the `abstract.id` key for each contract with the corresponding mainnet contract address.
+2. Update the `SUBGRAPH_URL` in `constants.ts` to point to the mainnet subgraph URL.
+3. Set `NEXT_PUBLIC_TEST_NETWORK=false` in your `.env` file.
 
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Environment Setup on Vercel
+
+Before deploying to Vercel:
+
+1. Ensure all environment variables are configured in your Vercel project settings
+2. Set the environment variables according to your target network (testnet/mainnet)
+3. Verify that all mainnet configurations are properly set up as described in the Mainnet Configuration section
+
+Check your deployment preview to confirm everything works as expected before deploying to production.
